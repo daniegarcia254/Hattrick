@@ -50,3 +50,13 @@ When the container is started, the *hattrick* database will be created, as well 
 
 ## REST API Endpoints
 
+**Note**: for those endpoints that need authentication, you must set the access token (given when login is done) in REST API explorer page in the text input you can find on the top-right corner.
+
+#### Users
+- **[<code>POST</code> user/users](api-doc/users/POST_user.md)**
+- **[<code>POST</code> user/login](api-doc/users/POST_login.md)**
+- **[<code>POST</code> user/logout](api-doc/users/POST_logout.md)**
+- **[<code>POST</code> user/resetPassword](api-doc/users/POST_resetPassword.md)**
+- **[<code>POST</code> user/reset](api-doc/users/POST_reset.md)**
+- **[<code>GET</code> user/{id}](api-doc/users/GET_user.md)**
+- **[<code>PUT</code> user/{id}](api-doc/users/PUT_user.md)**
