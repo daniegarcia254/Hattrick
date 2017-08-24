@@ -53,10 +53,30 @@ When the container is started, the *hattrick* database will be created, as well 
 **Note**: for those endpoints that need authentication, you must set the access token (given when login is done) in REST API explorer page in the text input you can find on the top-right corner.
 
 #### Users
-- **[<code>POST</code> user/users](api-doc/users/POST_user.md)**
-- **[<code>POST</code> user/login](api-doc/users/POST_login.md)**
-- **[<code>POST</code> user/logout](api-doc/users/POST_logout.md)**
-- **[<code>POST</code> user/resetPassword](api-doc/users/POST_resetPassword.md)**
-- **[<code>POST</code> user/reset](api-doc/users/POST_reset.md)**
-- **[<code>GET</code> user/{id}](api-doc/users/GET_user.md)**
-- **[<code>PUT</code> user/{id}](api-doc/users/PUT_user.md)**
+- **[<code>POST</code> users](api-doc/users/POST_user.md)**
+- **[<code>POST</code> users/login](api-doc/users/POST_login.md)**
+- **[<code>POST</code> users/logout](api-doc/users/POST_logout.md)**
+- **[<code>POST</code> users/resetPassword](api-doc/users/POST_resetPassword.md)**
+- **[<code>GET</code> users/{id}](api-doc/users/GET_user.md)**
+- **[<code>PUT</code> users/{id}](api-doc/users/PUT_user.md)**
+
+#### Reset Password Request
+- **[<code>POST</code> resetPasswordRequests](api-doc/reset-password/POST_reset.md)**
+
+#### Categories
+- **[<code>POST</code> categories](api-doc/categories/POST_category.md)**
+- **[<code>PUT</code> categories/{id}](api-doc/categories/PUT_category.md)**
+- **[<code>GET</code> categories/{id}](api-doc/categories/GET_category.md)**
+- **[<code>POST</code> categories/{id}/questions](api-doc/categories/POST_category_question.md)**
+- **[<code>PUT</code> categories/{id}/questions](api-doc/categories/PUT_category_question.md)**
+- **[<code>GET</code> categories/{id}/questions](api-doc/categories/GET_category_question.md)**
+
+#### Communities, Comments, Questions, Answers
+
+Rest of the API endpoints are very similar in its behaviour to the ones explained previously.
+
+So, I'm not going to repeat my self. Why don't you give it a try??!! =)
+
+## Roadmap
+
+- Add roles for the users (PLAYER, ADMIN, etc.) and ACLs to the differente endponints depending on those roles. For example questions and categories should be only created by admins.
