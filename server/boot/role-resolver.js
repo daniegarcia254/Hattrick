@@ -22,12 +22,11 @@ module.exports = function(app) {
 
   //Role -> Current user
   Role.registerResolver('currentUser', function(role, ctx, cb) {
-
     if (ctx.modelName !== 'user') return reject(cb);
     var userId = ctx.accessToken.userId;
     if (!userId) return reject(cb);
     console.log("CURRENT USER", userId, ctx.modelId);
-    if (userId !== ctx.modelId) return cb(createError(401,'Not current user','NOT_CURRENT_USER'));
+    if (parseInt(userId) != parseInt(ctx.modelId)) return cb(createError(401,'Not current user','NOT_CURRENT_USER'));
     else return cb(null,true);
   });
 
@@ -43,7 +42,7 @@ module.exports = function(app) {
     Community.findById(ctx.modelId, function(err, community){
       if (err) return cb(err);
       else if (!community) return cb(createError(404,'Community not found','COMMUNITY_NOT_FOUND'));
-      else if (community.adminID !== userId) return cb(createError(401,'User is not the community admin','USER_NOT_COMMUNITY_ADMIN'));
+      else if (parseInt(community.adminID) !== parseInt(userId)) return cb(createError(401,'User is not the community admin','USER_NOT_COMMUNITY_ADMIN'));
       else return cb(null, true);
     });
   });

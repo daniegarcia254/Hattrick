@@ -25,7 +25,7 @@ module.exports = function(User) {
 
 	User.observe('before save', function(ctx, next){
 		if (ctx.isNewInstance) ctx.instance.created = moment().tz('Europe/Madrid');
-		else ctx.instance.update = moment().tz('Europe/Madrid');
+		else ctx.currentInstance.update = moment().tz('Europe/Madrid');
 		next();
 	});
 
@@ -88,7 +88,7 @@ module.exports = function(User) {
 				} else {
 					if (community.type === Community.PRIVATE){
 						if (decrypt(community.password) !== ctx.args.data.password) {
-							next(createError(422, 'The community password is incorrect', 'COMMUNITY_PASSWORD_INCORRECT'));	
+							next(createError(422, 'The community password is incorrect', 'COMMUNITY_PASSWORD_INCORRECT'));
 						} else {
 							community.users(function(err, users){
 								if (err) next(err);
@@ -100,7 +100,7 @@ module.exports = function(User) {
 										delete ctx.args.data.password;
 										delete ctx.args.data.code;
 										ctx.req.params.fk = ctx.args.fk = community.id;
-										next();									
+										next();
 									}
 								}
 							});
@@ -115,7 +115,7 @@ module.exports = function(User) {
 								} else {
 									delete ctx.args.data.code;
 									ctx.req.params.fk = ctx.args.fk = community.id;
-									next();									
+									next();
 								}
 							}
 						});

@@ -12,7 +12,7 @@ module.exports = function(Category) {
 		err.description = message;
 		return err;
 	};
-	
+
 	Category.observe('before save', function(ctx, next){
 		if (ctx.isNewInstance){
 			ctx.instance.created = moment().tz('Europe/Madrid');
