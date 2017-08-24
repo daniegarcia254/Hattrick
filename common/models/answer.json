@@ -1,0 +1,51 @@
+{
+  "name": "answer",
+  "plural": "answers",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "option": {
+      "type": "number",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "isCorrect": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations":{
+    "question": {
+      "type": "belongsTo",
+      "model": "question",
+      "foreignKey": "questionID"
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": "userID"
+    },
+    "community": {
+      "type": "belongsTo",
+      "model": "community",
+      "foreignKey": "communityID"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

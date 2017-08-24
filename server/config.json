@@ -1,0 +1,40 @@
+{
+  "restApiRoot": "/api",
+  "host": "0.0.0.0",
+  "port": 3000,
+  "legacyExplorer": false,
+  "logoutSessionsOnSensitiveChanges": true,
+  "remoting": {
+    "context": false,
+    "rest": {
+      "normalizeHttpPath": false,
+      "xml": false
+    },
+    "json": {
+      "strict": false,
+      "limit": "100kb"
+    },
+    "urlencoded": {
+      "extended": true,
+      "limit": "100kb"
+    },
+    "cors": false,
+    "handleErrors": false,
+    "sharedMethods": {
+      "deleteById": false,
+      "findOne": false,
+      "upsertWithWhere": false,
+      "createChangeStream": false,
+      "confirm": false,
+      "count": false,
+      "exists": false,
+      "upsert": false,
+      "updateAll": false,
+      "replaceById": false,
+      "replace": false,
+      "patchOrCreate": false,
+      "patchAttributes": false,
+      "replaceOrCreate": false
+    }
+  }
+}
