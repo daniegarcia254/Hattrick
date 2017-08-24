@@ -1,0 +1,20 @@
+version: '3'
+services:
+  hattrick:
+    container_name: hattrick
+    links:
+      - hattrick_db
+    build:
+      dockerfile: Dockerfile
+      context: .
+    expose:
+      - "10002"
+    ports:
+      - "10002:10002"
+    privileged: true
+  hattrick_db:
+    image: mysql:5.5
+    container_name: hattrick_db
+    privileged: true
+    env_file:
+      - mysql-environment.yml
