@@ -28,10 +28,7 @@ module.exports = {
 			template: './src/index.html',
 			filename: 'index.html',
 			inject: 'body'
-		}),
-		new webpack.EnvironmentPlugin([
-			'NODE_ENV'
-		])
+		})
 	],
 	devServer: {
 			historyApiFallback: true

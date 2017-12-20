@@ -7,9 +7,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "start-prod": "NODE_ENV=prod webpack-dev-server --open --host 0.0.0.0 --port 10009 --public danigarcia-dev.com:10009 --config webpack/prod.config.js",
-    "start-dev": "NODE_ENV=dev webpack-dev-server --open --host 0.0.0.0 --port 10009 --public danigarcia-dev.com:10009 --config webpack/dev.config.js",
-    "start-local": "NODE_ENV=local webpack-dev-server --open --host 0.0.0.0 --port 10009 --public danigarcia-dev.com:10009 --config webpack/local.config.js"
+    "start-prod": "webpack-dev-server --open --host 0.0.0.0 --port 10009 --public danigarcia-dev.com:10009 --config webpack/prod.config.js",
+    "start-dev": "webpack-dev-server --open --host 0.0.0.0 --port 10009 --public danigarcia-dev.com:10009 --config webpack/dev.config.js",
+    "start-local": "webpack-dev-server --open --host localhost --port 10009 --config webpack/local.config.js"
   },
   "dependencies": {
     "history": "^4.6.3",
