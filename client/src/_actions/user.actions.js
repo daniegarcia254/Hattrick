@@ -26,7 +26,7 @@ function login(username, password) {
                                 var userInfo = Object.assign({}, currentUser, user);
                                 localStorage.setItem('user', JSON.stringify(userInfo));
                                 dispatch(success(userInfo));
-                                history.push('/');
+                                history.push('/play');
                             },
                             error => {
                                 console.error('Error getting current user', error);

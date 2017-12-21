@@ -6,6 +6,7 @@ import { userActions } from '../_actions';
 
 class HomePage extends React.Component {
     componentDidMount() {
+        console.log('Props mount:', this.props);
         this.props.dispatch(userActions.getAll());
     }
 
@@ -14,6 +15,7 @@ class HomePage extends React.Component {
     }
 
     render() {
+        console.log('Props:', this.props);
         const { user, users } = this.props;
         return (
             <div className="col-md-6 col-md-offset-3">

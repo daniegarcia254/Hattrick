@@ -3,6 +3,7 @@ import { userConstants } from '../_constants';
 export function users(state = {}, action) {
   switch (action.type) {
     case userConstants.GETALL_REQUEST:
+    case userConstants.GET_USER_COMMUNITIES_REQUEST:  
       return {
         loading: true
       };
@@ -10,7 +11,12 @@ export function users(state = {}, action) {
       return {
         items: action.users
       };
+    case userConstants.GET_USER_COMMUNITIES_SUCCESS:
+      return {
+        items: action.communities
+      };
     case userConstants.GETALL_FAILURE:
+    case userConstants.GET_USER_COMMUNITIES_FAILURE: 
       return { 
         error: action.error
       };
