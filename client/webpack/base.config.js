@@ -31,12 +31,32 @@ module.exports = {
 					use: ['css-loader', 'sass-loader']
 				})
 			}, {
-				test: /\.(png|jp(e*)g|svg)$/,
-				loader: 'url-loader',
-				options: {
-					limit: 8000, // Convert images < 8kb to base64 strings
-					name: 'images/[hash]-[name].[ext]'
-				}
+				test: /\.(gif|png|jpe?g|svg)$/i,
+				loaders: [
+					'file-loader', {
+						loader: 'image-webpack-loader',
+						options: {
+							gifsicle: {
+								interlaced: false,
+							},
+							optipng: {
+								optimizationLevel: 7,
+							},
+							pngquant: {
+								quality: '65-90',
+								speed: 4
+							},
+							mozjpeg: {
+								progressive: true,
+								quality: 65
+							},
+							// Specifying webp here will create a WEBP version of your JPG/PNG images
+							webp: {
+								quality: 75
+							}
+						}
+					}
+				]
 			}
 		]
 	},
