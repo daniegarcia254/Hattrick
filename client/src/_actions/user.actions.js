@@ -17,15 +17,30 @@ function login(username, password) {
 
         userService.login(username, password)
             .then(
-                user => { 
-                    dispatch(success(user));
-                    history.push('/');
+                user => {
+                    console.log('Success login user', user);
+                    userService.getById(user.userId)
+                        .then(
+                            currentUser => {
+                                console.log('Success getting current', currentUser);
+                                var userInfo = Object.assign({}, currentUser, user);
+                                localStorage.setItem('user', JSON.stringify(userInfo));
+                                dispatch(success(userInfo));
+                                history.push('/');
+                            },
+                            error => {
+                                console.error('Error getting current user', error);
+                                dispatch(failure(error));
+                                dispatch(alertActions.error(error));
+                            }
+                        );
                 },
                 error => {
+                    console.error('Error login user', error);
                     dispatch(failure(error));
                     dispatch(alertActions.error(error));
                 }
-            );
+        );
     };
 
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
@@ -44,7 +59,7 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => { 
+                user => {
                     dispatch(success());
                     history.push('/login');
                     dispatch(alertActions.success('Registration successful'));
@@ -84,7 +99,7 @@ function _delete(id) {
 
         userService.delete(id)
             .then(
-                user => { 
+                user => {
                     dispatch(success(id));
                 },
                 error => {

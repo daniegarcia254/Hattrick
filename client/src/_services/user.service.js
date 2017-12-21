@@ -26,8 +26,7 @@ function login(username, password) {
             return response.json();
         })
         .then(user => {
-					  console.log("Success login user", user);
-            if (user && user.id) {
+            if (user && user.id && user.userId) {
                 localStorage.setItem('user', JSON.stringify(user));
             }
 
