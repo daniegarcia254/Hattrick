@@ -8,6 +8,7 @@ import { PrivateRoute, Header} from '../_components';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
+import MainCss from '../_css/Main.scss';
 
 class App extends React.Component {
     constructor(props) {
