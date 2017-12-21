@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { validator } from 'validator';
+import validator from 'validator';
 
 import { userActions } from '../_actions';
 import LoaderGif from '../_assets/loader.gif';
@@ -70,8 +70,8 @@ class RegisterPage extends React.Component {
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.email ? ' has-error' : '')}>
-                        <label htmlFor="email">Last Name</label>
-                        <input type="text" className="form-control" name="email" value={user.email} onChange={this.handleChange} />
+                        <label htmlFor="email">Email</label>
+                        <input type="email" className="form-control" name="email" value={user.email} onChange={this.handleChange} />
                         {submitted && !user.email &&
                             <div className="help-block">Email is required</div>
                         }

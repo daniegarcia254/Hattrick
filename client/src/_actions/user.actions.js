@@ -59,12 +59,14 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => {
+            user => {
+                    console.log('Success registering user', user);
                     dispatch(success());
                     history.push('/login');
                     dispatch(alertActions.success('Registration successful'));
                 },
                 error => {
+                    console.error('Error registering user', error);
                     dispatch(failure(error));
                     dispatch(alertActions.error(error));
                 }
