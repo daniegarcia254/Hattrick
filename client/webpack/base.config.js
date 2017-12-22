@@ -11,7 +11,8 @@ module.exports = {
 	entry: './src/index.jsx',
 	output: {
 		path: path.resolve('dist'),
-		filename: 'bundle.js'
+		filename: 'bundle.js',
+		publicPath: '/'
 	},
 	resolve: {
 		extensions: ['.js', '.jsx']
@@ -27,11 +28,13 @@ module.exports = {
 				}
 			}, {
 				test: /\.scss$/,
+				exclude: /(node_modules|bower_components)/,
 				use: extractPlugin.extract({
 					use: ['css-loader', 'sass-loader']
 				})
 			}, {
 				test: /\.(gif|png|jpe?g|svg)$/i,
+				exclude: /(node_modules|bower_components)/,
 				loaders: [
 					'file-loader', {
 						loader: 'image-webpack-loader',
