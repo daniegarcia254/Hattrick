@@ -1,8 +1,17 @@
 import { authHeader } from '../_helpers';
 
 export const communityService = {
+	getAll,
 	getUserCommunities
 };
+
+function getAll() {
+	const requestOptions = {
+		method: 'GET',
+		headers: authHeader()
+	};
+	return fetch(API_URL + '/communities', requestOptions).then(handleResponse);
+}
 
 function getUserCommunities(userId) {
 	const requestOptions = {
