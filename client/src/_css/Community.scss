@@ -1,7 +1,13 @@
-.ChooseCommunityMain, .JoinCommunityMain, .CreateCommunityMain {
+.ChooseCommunityMain, .JoinCommunityMain {
 	text-align: center;
 	.row {
 		margin-top: 20px;
 		margin-bottom: 20px;
+	}
+}
+
+.CreateCommunityMain {
+	.row:nth-child(1){
+		text-align: center;
 	}
 }

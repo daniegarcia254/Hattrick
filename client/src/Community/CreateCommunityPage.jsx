@@ -51,8 +51,12 @@ class CreateCommunityPage extends React.Component {
 		const { type, categoryID, name, password, submitted, creatingCommunity } = this.state;
 		const { user, categories, communities} = this.props;
 		return (
-			<div className="col-md-6 col-md-offset-3">
-				<h2>Create new Community</h2>
+			<div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 CreateCommunityMain">
+				<div className="row">
+					<div className="col-sm-12 col-md-12">
+						<h2>Create New Community</h2>
+					</div>
+				</div>
 				<div className="row">
 					<LoadMask loaded={categories.loaded}>
 						{categories.error && <span className="text-danger">Error loading categories: {categories.error}</span>}
@@ -101,7 +105,7 @@ class CreateCommunityPage extends React.Component {
 								</div>
 							</form>
 						}
-					</LoadMask>		
+					</LoadMask>
 				</div>
 			</div>
 		);
