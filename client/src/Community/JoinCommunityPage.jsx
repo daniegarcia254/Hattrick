@@ -6,16 +6,40 @@ import { communityActions } from '../_actions';
 import CommunityCSS from '../_css/Community.scss';
 
 class JoinCommunityPage extends React.Component {
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			choosenCommunity: 0,
+			submitted: false
+		};
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
 	componentDidMount() {
 		this.props.dispatch(communityActions.getAllCommunities());
 	}
 
-    /*handleDeleteUser(id) {
-        return (e) => this.props.dispatch(userActions.delete(id));
-    }*/
+	handleChange(e) {
+		const { name, value } = e.target;
+		this.setState({ [name]: value });
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+
+		this.setState({ submitted: true });
+		const { choosenCommunity } = this.state;
+		const { dispatch } = this.props;
+		if (choosenCommunity) {
+			dispatch(communityActions.create(choosenCommunity));
+		}
+	}
 
 	render() {
-		console.log('Props', this.props);
 		const { user, communities } = this.props;
 		return (
 			<div className="col-md-12 JoinCommunityMain">
@@ -27,17 +51,28 @@ class JoinCommunityPage extends React.Component {
 					<Link className="btn btn-success btn-lg" to="/community/create">Create new Community</Link>
 				</div>
 				<div className="row">
-					<Link className="btn btn-primary btn-lg" to="/community/join">Join existing Community</Link>
+					<Link className="btn btn-primary btn-lg" to="/community/join-public">Join Public Community</Link>
 				</div>
 				<div className="row">
-					{communities.items && communities.items.length > 0 && <span>Choose Community</span>}
-					{communities.items && communities.items.length > 0 &&
-						<select>
-							<option>Community 1</option>
-							<option>Community 2</option>
-						</select>
-					}
+					<Link className="btn btn-primary btn-lg" to="/community/join-private">Join Private Community</Link>
 				</div>
+				{communities.items && communities.items.length > 0 &&
+					<div className="row">
+					<form name="form" onSubmit={this.handleSubmit}>
+							<div className={'form-group' + (submitted && !type ? ' has-error' : '')}>
+								<label htmlFor="choosenCommunity">Choose one of your communities to play:</label>
+								<select className="form-control" name="choosenCommunity" defaultValue={type} onChange={this.handleChange} >
+									{communities.items.map((community, index) =>
+										<option key={community.id} value={community.id}>{community.name}</option>
+									)}
+								</select>
+							</div>
+							<div className="form-group">
+								<button className="btn btn-success">Go</button>
+							</div>
+						</form>
+					</div>
+				}
 				<div className="row">
 					<p> <Link to="/login">Logout</Link> </p>
 				</div>

@@ -22,6 +22,7 @@ export function userCommunities(state = {}, action) {
 export function communities(state = {}, action) {
 	switch (action.type) {
 		case communityConstants.GET_ALL_REQUEST:
+		case communityConstants.CREATE_REQUEST:
 			return {
 				loading: true
 			};
@@ -29,7 +30,12 @@ export function communities(state = {}, action) {
 			return {
 				items: action.communities
 			};
+		case communityConstants.CREATE_SUCCESS:
+			return {
+				items: action.community
+			};
 		case communityConstants.GET_ALL_FAILURE:
+		case communityConstants.CREATE_FAILURE:
 			return {
 				error: action.error
 			};

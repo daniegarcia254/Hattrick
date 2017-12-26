@@ -4,43 +4,106 @@ import { connect } from 'react-redux';
 
 import { communityActions } from '../_actions';
 import CommunityCSS from '../_css/Community.scss';
+import { userCommunities } from '../_reducers/communities.reducer';
 
 class ChooseCommunityPage extends React.Component {
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			choosenCommunityID: '',
+			community: null,
+			password: '',
+			submitted: false
+		};
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
 	componentDidMount() {
 		this.props.dispatch(communityActions.getAll());
 		this.props.dispatch(communityActions.getUserCommunities());
 	}
 
+	handleChange(e) {
+		const { userCommunities } = this.props;
+		const { name, value } = e.target;
+		this.setState({ [name]: value });
+		if (name === 'choosenCommunityID' && userCommunities && userCommunities.items) {
+			console.log("handle", name, value, userCommunities.items.find(x => x.code === value));
+			this.setState({ community: userCommunities.items.find(x => x.code === value)});
+		}
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+
+		this.setState({ submitted: true });
+		const { choosenCommunityID, password, community} = this.state;
+		const { dispatch } = this.props;
+		if (community && community.type == 'PRIVATE' && password) {
+			//dispatch(communityActions.create(choosenCommunityID));
+			console.log("Community PRIVATE", choosenCommunity, password);
+		} else if (community && community.type == 'PUBLIC') {
+			//dispatch(communityActions.create(choosenCommunityID));
+			console.log("Community PUBLIC", choosenCommunity);
+		} else {
+			console.log('zaruta');
+		}
+	}
+
 	render() {
-		console.log('ChooseCommunityPage: props', this.props);
-		const { user, userCommunities, communities } = this.props;
+		console.log('Choose community PROPS', this.props);
+		const { choosenCommunityID, password, submitted, community} = this.state;
+		const { user, communities, userCommunities } = this.props;
 		return (
-			<div className="col-md-12 ChooseCommunityMain">
+			<div className="col-md-8 JoinCommunityMain">
 				<div className="row">
-					<h1>Hi {user.name}!</h1>
-					<h3>Create, join or choose a community</h3>
+					<h3>Hi {user.name}!</h3>
+					<h3><small>Create, join or choose a community</small></h3>
 				</div>
 				<div className="row">
 					<Link className="btn btn-success btn-lg" to="/community/create">Create new Community</Link>
 				</div>
 				<div className="row">
-					{(!communities.items || communities.items.length === 0) && 
-						<button className="btn btn-primary btn-lg" disabled="disabled">Join existing Community</button>
-					}
-					{communities.items && communities.items.length > 1 && 
-						<Link className="btn btn-primary btn-lg" to="/community/join">Join existing Community</Link>
-					}
+					<Link className="btn btn-primary btn-lg" to="/community/join-public">Join Public Community</Link>
 				</div>
 				<div className="row">
-					{userCommunities.items && userCommunities.items.length > 0 && <span>Choose Community</span>}
-					{userCommunities.items && userCommunities.items.length > 0 &&
-						<select>
-							{userCommunities.items.map((community, index) =>
-								<option value={community.id}> {community.name} </option>
-							)}
-						</select>
-					}
+					<Link className="btn btn-warning btn-lg" to="/community/join-private">Join Private Community</Link>
 				</div>
+				{userCommunities.items && userCommunities.items.length > 0 &&
+					<div className="row">
+						<form name="form" onSubmit={this.handleSubmit}>
+							<hr/>
+							<div><label>OR</label></div>
+							<div className={'form-group' + (submitted && !choosenCommunityID ? ' has-error' : '')}>
+								<label htmlFor="choosenCommunityID">Choose one of your communities to play:</label>
+								<select className="form-control" name="choosenCommunityID" defaultValue={choosenCommunityID} onChange={this.handleChange} >
+									<option value='' selected></option>
+									{userCommunities.items.map((community, index) =>
+										<option key={community.id} value={community.code}>{community.name}</option>
+									)}
+								</select>
+								{submitted && !choosenCommunityID &&
+									<div className="help-block">A community must be chosen to play!</div>
+								}
+							</div>
+							{community && community.type === 'PRIVATE' &&
+								<div className={'form-group' + (submitted && choosenCommunityID && !password ? ' has-error' : '')}>
+									<input className="form-control" name="password" placeholder="Community password" onChange={this.handleChange} />
+									{submitted && choosenCommunityID && !password &&
+										<div className="help-block">Password must be provided for a private community!</div>
+									}
+								</div>
+							}
+							<div className="form-group">
+								<button className="btn btn-success">Go</button>
+							</div>
+						</form>
+					</div>
+				}
 				<div className="row">
 					<p> <Link to="/login">Logout</Link> </p>
 				</div>

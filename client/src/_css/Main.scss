@@ -8,3 +8,9 @@ html, body, #app, #app>div {
 	width: 25px;
 	height: 25px;
 }
+
+.loader {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+}
