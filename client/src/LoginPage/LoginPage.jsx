@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
 
 import { userActions } from '../_actions';
 import LoaderGif from '../_assets/loader.gif';
+import LoginCSS from '../_css/Login.scss';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -42,9 +44,13 @@ class LoginPage extends React.Component {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
         return (
-            <div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                <h2>Login</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
+            <div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 LoginPage">
+                <div className="row login-title">
+                    <div className="col-sm-12 col-md-12">
+                        <h2>Login</h2>
+                    </div>
+                </div>    
+                <form name="form">
                     <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
                         <label htmlFor="username">Username</label>
                         <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
@@ -60,11 +66,19 @@ class LoginPage extends React.Component {
                         }
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-primary">Login</button>
-                        {loggingIn &&
-                            <img className="Loader" src={LoaderGif} />
-                        }
-                        <Link to="/register" className="btn btn-link">Register</Link>
+                        <div className="row">    
+                            <div className="col-xs-12 col-sm-12 col-md-12">
+                                <Button bsStyle="success" className="login-btn" onClick={this.handleSubmit}>Login</Button>
+                                {loggingIn &&
+                                    <img className="Loader" src={LoaderGif} />
+                                }
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-xs-12 col-sm-12 col-md-12">
+                                <Link to="/register" className="btn btn-primary register-btn">Register</Link>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>

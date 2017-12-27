@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import validator from 'validator';
+import { Button } from 'react-bootstrap';
 
 import { userActions } from '../_actions';
 import LoaderGif from '../_assets/loader.gif';
+import RegisterCSS from '../_css/Register.scss';
 
 class RegisterPage extends React.Component {
     constructor(props) {
@@ -52,9 +54,13 @@ class RegisterPage extends React.Component {
         const { registering } = this.props;
         const { user, submitted } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Register</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
+            <div className="col-md-6 col-md-offset-3 RegisterPage">
+                <div className="row register-title">
+                    <div className="col-sm-12 col-md-12">
+                        <h2>Register</h2>
+                    </div>
+                </div>  
+                <form name="form">
                     <div className={'form-group' + (submitted && !user.firstName ? ' has-error' : '')}>
                         <label htmlFor="firstName">First Name</label>
                         <input type="text" className="form-control" name="firstName" value={user.firstName} onChange={this.handleChange} />
@@ -91,11 +97,11 @@ class RegisterPage extends React.Component {
                         }
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-primary">Register</button>
+                        <Button bsStyle="success" className="register-btn" onClick={this.handleSubmit}>Register</Button>
                         {registering &&
                             <img className="Loader" src={LoaderGif} />
                         }
-                        <Link to="/login" className="btn btn-link">Cancel</Link>
+                        <Link to="/login" className="btn btn-danger cancel-btn">Cancel</Link>
                     </div>
                 </form>
             </div>
