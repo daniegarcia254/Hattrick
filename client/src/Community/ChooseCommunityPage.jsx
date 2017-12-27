@@ -33,7 +33,7 @@ class ChooseCommunityPage extends React.Component {
 		this.setState({ [name]: value });
 		if (name === 'choosenCommunityID' && userCommunities && userCommunities.items) {
 			console.log("handle", name, value, userCommunities.items.find(x => x.code === value));
-			this.setState({ community: userCommunities.items.find(x => x.code === value)});
+			this.setState({ community: userCommunities.items.find(x => x.code === value) });
 		}
 	}
 
@@ -41,7 +41,7 @@ class ChooseCommunityPage extends React.Component {
 		e.preventDefault();
 
 		this.setState({ submitted: true });
-		const { choosenCommunityID, password, community} = this.state;
+		const { choosenCommunityID, password, community } = this.state;
 		const { dispatch } = this.props;
 		if (community && community.type == 'PRIVATE' && password) {
 			//dispatch(communityActions.create(choosenCommunityID));
@@ -56,25 +56,25 @@ class ChooseCommunityPage extends React.Component {
 
 	render() {
 		console.log('Choose community PROPS', this.props);
-		const { choosenCommunityID, password, submitted, community} = this.state;
+		const { choosenCommunityID, password, submitted, community } = this.state;
 		const { user, communities, userCommunities } = this.props;
 		return (
 			<div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-10 col-md-offset-1 JoinCommunityMain">
 				<div className="row">
 					<div className="col-sm-12 col-md-12">
-							<h2>Hi {user.name}!</h2>
-							<h3><small>Create, join or choose a community</small></h3>
+						<h2>Hi {user.name}!</h2>
+						<h3><small>Create, join or choose a community</small></h3>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-sm-3 col-sm-offset-3 col-md-1 col-md-pull-3">
-							<Link className="btn btn-success btn-lg" to="/community/create">Create new Community</Link>
+						<Link className="btn btn-success btn-lg" to="/community/create">Create new Community</Link>
 					</div>
 					<div className="col-sm-8 col-sm-pull-1 col-md-3 col-md-offset-1">
-							<Link className="btn btn-primary btn-lg" to="/community/join-public">Join Public Community</Link>
+						<Link className="btn btn-primary btn-lg" to="/community/join-public">Join Public Community</Link>
 					</div>
 					<div className="col-sm-3 col-sm-pull-1 col-md-3 col-md-offset-1">
-							<Link className="btn btn-primary btn-lg" to="/community/join-private">Join Private Community</Link>
+						<Link className="btn btn-primary btn-lg" to="/community/join-private">Join Private Community</Link>
 					</div>
 				</div>
 				{userCommunities.items && userCommunities.items.length > 0 &&
