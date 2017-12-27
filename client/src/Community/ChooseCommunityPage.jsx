@@ -58,10 +58,10 @@ class ChooseCommunityPage extends React.Component {
 		const { dispatch } = this.props;
 		if (community && community.type == 'PRIVATE' && password) {
 			//dispatch(communityActions.create(chosenCommunity));
-			console.log("Community PRIVATE", choosenCommunity, password);
+			console.log("Community PRIVATE", chosenCommunity, password);
 		} else if (community && community.type == 'PUBLIC') {
 			//dispatch(communityActions.create(chosenCommunity));
-			console.log("Community PUBLIC", choosenCommunity);
+			console.log("Community PUBLIC", chosenCommunity);
 		}
 	}
 
