@@ -4,10 +4,8 @@ export const userService = {
     login,
     logout,
     register,
-    getAll,
     getById,
-    update,
-    delete: _delete
+    update
 };
 
 function login(username, password) {
@@ -20,7 +18,7 @@ function login(username, password) {
     return fetch(API_URL + '/users/login', requestOptions)
         .then(response => {
             if (!response.ok) {
-                return Promise.reject(response.statusText);
+                return Promise.reject(response.json());
             }
 
             return response.json();
@@ -41,15 +39,6 @@ function logout() {
     };
     localStorage.removeItem('user');
 		return fetch(API_URL + '/users/logout', requestOptions).then(response=> { return {}; });
-}
-
-function getAll() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(API_URL + '/users', requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -81,19 +70,9 @@ function update(user) {
     return fetch(API_URL + '/users/' + user.id, requestOptions).then(handleResponse);;
 }
 
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-    const requestOptions = {
-        method: 'DELETE',
-        headers: authHeader()
-    };
-
-    return fetch(API_URL + '/users/' + id, requestOptions).then(handleResponse);;
-}
-
 function handleResponse(response) {
     if (!response.ok) {
-        return Promise.reject(response.statusText);
+        return Promise.reject(response.json());
     }
 
     return response.json();
