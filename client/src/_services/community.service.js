@@ -2,8 +2,9 @@ import { authHeader } from '../_helpers';
 
 export const communityService = {
 	getAll,
+	getUserCommunities,
 	create,
-	getUserCommunities
+	join
 };
 
 function getAll() {
@@ -33,9 +34,23 @@ function getUserCommunities(userId) {
 	return fetch(API_URL + '/users/' + user.userId + '/communities', requestOptions).then(handleResponse);
 }
 
+function join(type, community, password) {
+	const requestOptions = {
+		method: 'PUT',
+		headers: Object.assign({}, authHeader(), { 'Content-type': 'application/json' }),
+		body: JSON.stringify({
+			type,
+			code: community.code,
+			password
+		})
+	}
+	let user = JSON.parse(localStorage.getItem('user'));
+	return fetch(API_URL + '/users/' + user.userId + '/communities/rel/' + community.id, requestOptions).then(handleResponse);
+}
+
 function handleResponse(response) {
 	if (!response.ok) {
-		return Promise.reject(response.statusText);
+		return Promise.reject(response.json());
 	}
 
 	return response.json();

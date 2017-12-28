@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
+import LoadMask from 'react-loader'
 
 import { communityActions } from '../_actions';
 import CommunityCSS from '../_css/Community.scss';
@@ -41,6 +42,16 @@ class ChooseCommunityPage extends React.Component {
 		this.props.dispatch(communityActions.getUserCommunities());
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		if (!prevProps.communities.joinLoaded && this.props.communities.joinLoaded) {
+			this.setState({ chosenPublic: '', chosenPrivate: '', submittedPublic: false, submittedPrivate: false });
+			this.hidePublicModal();
+			this.hidePrivateModal();
+			this.props.dispatch(communityActions.getAll());
+			this.props.dispatch(communityActions.getUserCommunities());
+		}
+	}
+
 	handleChange(e) {
 		const { userCommunities } = this.props;
 		const { name, value } = e.target;
@@ -57,11 +68,9 @@ class ChooseCommunityPage extends React.Component {
 		const { chosenCommunity, password, community } = this.state;
 		const { dispatch } = this.props;
 		if (community && community.type == 'PRIVATE' && password) {
-			//dispatch(communityActions.create(chosenCommunity));
-			console.log("Community PRIVATE", chosenCommunity, password);
+			//dispatch(communityActions.join('private', chosenCommunity, password));
 		} else if (community && community.type == 'PUBLIC') {
-			//dispatch(communityActions.create(chosenCommunity));
-			console.log("Community PUBLIC", chosenCommunity);
+			//dispatch(communityActions.join('public', chosenCommunity, null));
 		}
 	}
 
@@ -73,6 +82,7 @@ class ChooseCommunityPage extends React.Component {
 		const { dispatch, communities } = this.props;
 		if (chosenPublic && communities && communities.items && communities.items.length > 0) {
 			const chosenCommunity = communities.items.find(x => x.code === chosenPublic);
+			dispatch(communityActions.join('pubic', chosenCommunity, null));
 		}
 	}
 
@@ -84,6 +94,7 @@ class ChooseCommunityPage extends React.Component {
 		const { dispatch, communities } = this.props;
 		if (chosenPrivate && communities && communities.items && communities.items.length > 0) {
 			const chosenCommunity = communities.items.find(x => x.code === chosenPrivate);
+			dispatch(communityActions.join('private', chosenCommunity, passwordPrivate));
 		}
 	}
 
@@ -116,85 +127,89 @@ class ChooseCommunityPage extends React.Component {
 						<h3><small>Create, join or choose a community</small></h3>
 					</div>
 				</div>
-				<div className="row">
-					<div className="col-sm-3 col-sm-offset-3 col-md-1 col-md-pull-3 community-btn">
-						<Link className="btn btn-success btn-lg" to="/community/create">Create new Community</Link>
-					</div>
-					<div className="col-sm-8 col-sm-pull-1 col-md-3 col-md-offset-1 community-btn">
-						<Button bsStyle="primary" bsSize="large"
-							disabled={!publicCommunities || publicCommunities.length === 0}
-							onClick={this.showPublicModal}>Join Public Community</Button>
-					</div>
-					<div className="col-sm-3 col-sm-pull-1 col-md-3 col-md-offset-1 community-btn">
-						<Button bsStyle="primary" bsSize="large"
-							disabled={!privateCommunities || privateCommunities.length === 0}
-							onClick={this.showPrivateModal}>Join Private Community</Button>
-					</div>
-				</div>
-				{userCommunities.items && userCommunities.items.length > 0 &&
+				<LoadMask loaded={userCommunities.userCommunitiesLoaded===true}>
 					<div className="row">
-						<div className="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-							<form name="form">
-								<div><label>OR</label></div>
-								<div className={'form-group' + (submitted && !chosenCommunity ? ' has-error' : '')}>
-									<label htmlFor="chosenCommunity">Choose one of your communities to play:</label>
-									<select className="form-control" name="chosenCommunity" defaultValue={chosenCommunity} onChange={this.handleChange} >
-										<option value=''></option>
-										{userCommunities.items.map((community, index) =>
-											<option key={community.id} value={community.code}>{community.name}</option>
-										)}
-									</select>
-									{submitted && !chosenCommunity &&
-										<div className="help-block">A community must be chosen to play!</div>
-									}
-								</div>
-								{community && community.type === 'PRIVATE' &&
-									<div className={'form-group' + (submitted && chosenCommunity && !password ? ' has-error' : '')}>
-										<input className="form-control" name="password" placeholder="Community password" onChange={this.handleChange} />
-										{submitted && chosenCommunity && !password &&
-											<div className="help-block">Password must be provided for a private community!</div>
-										}
-									</div>
-								}
-								<div className="form-group">
-									<Button bsStyle="success" className="go-btn"
-										disabled={!userCommunities || !userCommunities.items || userCommunities.items.length === 0}
-										onClick={this.handleSubmit}>Play</Button>
-								</div>
-							</form>
+						<div className="col-sm-3 col-sm-offset-3 col-md-1 col-md-pull-3 community-btn">
+							<Link className="btn btn-success btn-lg" to="/community/create">Create new Community</Link>
+						</div>
+						<div className="col-sm-8 col-sm-pull-1 col-md-3 col-md-offset-1 community-btn">
+							<Button bsStyle="primary" bsSize="large"
+								disabled={!publicCommunities || publicCommunities.length === 0}
+								onClick={this.showPublicModal}>Join Public Community</Button>
+						</div>
+						<div className="col-sm-3 col-sm-pull-1 col-md-3 col-md-offset-1 community-btn">
+							<Button bsStyle="primary" bsSize="large"
+								disabled={!privateCommunities || privateCommunities.length === 0}
+								onClick={this.showPrivateModal}>Join Private Community</Button>
 						</div>
 					</div>
-				}
+					{userCommunities.items && userCommunities.items.length > 0 &&
+						<div className="row">
+							<div className="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+								<form name="form">
+									<div><label>OR</label></div>
+									<div className={'form-group' + (submitted && !chosenCommunity ? ' has-error' : '')}>
+										<label htmlFor="chosenCommunity">Choose one of your communities to play:</label>
+										<select className="form-control" name="chosenCommunity" defaultValue={chosenCommunity} onChange={this.handleChange} >
+											<option value=''></option>
+											{userCommunities.items.map((community, index) =>
+												<option key={community.id} value={community.code}>{community.name}</option>
+											)}
+										</select>
+										{submitted && !chosenCommunity &&
+											<div className="help-block">A community must be chosen to play!</div>
+										}
+									</div>
+									{community && community.type === 'PRIVATE' &&
+										<div className={'form-group' + (submitted && chosenCommunity && !password ? ' has-error' : '')}>
+											<input className="form-control" name="password" placeholder="Community password" onChange={this.handleChange} />
+											{submitted && chosenCommunity && !password &&
+												<div className="help-block">Password must be provided for a private community!</div>
+											}
+										</div>
+									}
+									<div className="form-group">
+										<Button bsStyle="success" className="go-btn"
+											disabled={!userCommunities || !userCommunities.items || userCommunities.items.length === 0}
+											onClick={this.handleSubmit}>Play</Button>
+									</div>
+								</form>
+							</div>
+						</div>
+					}
+				</LoadMask>
 				<div className="row">
 					<p> <Link to="/login">Logout</Link> </p>
 				</div>
 
 				{/* Modal to join public community*/}
-				<Modal {...this.props} show={showPublic} onHide={this.hidePublicModal} dialogClassName="custom-modal">
+				<Modal show={showPublic} onHide={this.hidePublicModal} dialogClassName="custom-modal">
 					<Modal.Header closeButton>
 						<Modal.Title id="contained-modal-title-lg">Join Public Community</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						{publicCommunities && publicCommunities.length>0 &&
-							<div className="row">
-								<div className="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
-									<form name="form">
-										<div className={'form-group' + (submittedPublic && !chosenPublic ? ' has-error' : '')}>
-											<label>Choose a public community to join:</label>
-											<select className="form-control" name="chosenPublic" defaultValue={chosenPublic} onChange={this.handleChange}>
-												<option value=''></option>
-												{publicCommunities.map((publicCommunity, index) =>
-													<option key={publicCommunity.id} value={publicCommunity.code}>{publicCommunity.name}</option>
-												)}
-											</select>
-											{submittedPublic && !chosenPublic &&
-												<div className="help-block">A community must be chosen to join!</div>
-											}
-										</div>
-									</form>
+						<LoadMask loaded={communities.joinLoaded === true}>	
+							{publicCommunities && publicCommunities.length > 0 &&
+								<div className="row">
+									<div className="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+										<form name="form">
+											<div className={'form-group' + (submittedPublic && !chosenPublic ? ' has-error' : '')}>
+												<label>Choose a public community to join:</label>
+												<select className="form-control" name="chosenPublic" defaultValue={chosenPublic} onChange={this.handleChange}>
+													<option value=''></option>
+													{publicCommunities.map((publicCommunity, index) =>
+														<option key={publicCommunity.id} value={publicCommunity.code}>{publicCommunity.name}</option>
+													)}
+												</select>
+												{submittedPublic && !chosenPublic &&
+													<div className="help-block">A community must be chosen to join!</div>
+												}
+											</div>
+										</form>
+									</div>
 								</div>
-							</div>
-						}
+							}
+						</LoadMask>
 					</Modal.Body>
 					<Modal.Footer>
 						<Button bsStyle="success" onClick={this.handlePublicSubmit}>Join</Button>	
@@ -208,32 +223,34 @@ class ChooseCommunityPage extends React.Component {
 						<Modal.Title id="contained-modal-title-lg">Join Private Community</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						{privateCommunities && privateCommunities.length > 0 &&
-							<div className="row">
-								<div className="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
-									<form name="form">
-										<div className={'form-group' + (submittedPrivate && !chosenPrivate ? ' has-error' : '')}>
-											<label>Choose a private community to join:</label>
-											<select className="form-control" name="chosenPrivate" defaultValue={chosenPrivate} onChange={this.handleChange}>
-												<option value=''></option>
-												{privateCommunities.map((privateCommunity, index) =>
-													<option key={privateCommunity.id} value={privateCommunity.code}>{privateCommunity.name}</option>
-												)}
-											</select>
-											{submittedPrivate && !chosenPrivate &&
-												<div className="help-block">A community must be chosen to join!</div>
-											}
-										</div>
-										<div className={'form-group' + (submittedPrivate && chosenPrivate && !passwordPrivate ? ' has-error' : '')}>
-											<input className="form-control" name="passwordPrivate" placeholder="Community password" onChange={this.handleChange} />
-											{submittedPrivate && chosenPrivate && !passwordPrivate &&
-												<div className="help-block">Password must be provided for a private community!</div>
-											}
-										</div>
-									</form>
+						<LoadMask loaded={communities.joinLoaded === true}>	
+							{privateCommunities && privateCommunities.length > 0 &&
+								<div className="row">
+									<div className="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1">
+										<form name="form">
+											<div className={'form-group' + (submittedPrivate && !chosenPrivate ? ' has-error' : '')}>
+												<label>Choose a private community to join:</label>
+												<select className="form-control" name="chosenPrivate" defaultValue={chosenPrivate} onChange={this.handleChange}>
+													<option value=''></option>
+													{privateCommunities.map((privateCommunity, index) =>
+														<option key={privateCommunity.id} value={privateCommunity.code}>{privateCommunity.name}</option>
+													)}
+												</select>
+												{submittedPrivate && !chosenPrivate &&
+													<div className="help-block">A community must be chosen to join!</div>
+												}
+											</div>
+											<div className={'form-group' + (submittedPrivate && chosenPrivate && !passwordPrivate ? ' has-error' : '')}>
+												<input type="password" className="form-control" name="passwordPrivate" placeholder="Community password" onChange={this.handleChange} />
+												{submittedPrivate && chosenPrivate && !passwordPrivate &&
+													<div className="help-block">Password must be provided for a private community!</div>
+												}
+											</div>
+										</form>
+									</div>
 								</div>
-							</div>
-						}
+							}
+						</LoadMask>
 					</Modal.Body>
 					<Modal.Footer>
 						<Button bsStyle="success" onClick={this.handlePrivateSubmit}>Join</Button>	

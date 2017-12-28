@@ -5,8 +5,9 @@ import { history } from '../_helpers';
 
 export const communityActions = {
 	getAll,
+	getUserCommunities,
 	create,
-	getUserCommunities
+	join
 };
 
 function getAll() {
@@ -15,8 +16,13 @@ function getAll() {
 
 		communityService.getAll()
 			.then(
-			communities => dispatch(success(communities)),
-			error => dispatch(failure(error))
+				communities => dispatch(success(communities)),
+				error => {
+					error.then(function (error) {
+						dispatch(failure(error.error))
+						dispatch(alertActions.error("There has been an error (" + error.error.status + ") getting the communities: " + error.error.message));
+					});
+				}
 			);
 	};
 
@@ -32,7 +38,12 @@ function getUserCommunities() {
 		communityService.getUserCommunities()
 			.then(
 				communities => dispatch(success(communities)),
-				error => dispatch(failure(error))
+				error => {
+					error.then(function (error) {
+						dispatch(failure(error.error))
+						dispatch(alertActions.error("There has been an error (" + error.error.status + ") getting the user communities: " + error.error.message));
+					});
+				}
 			);
 	};
 
@@ -51,11 +62,40 @@ function create(type, categoryID, name, password) {
 					history.push('/community/choose'); 
 					dispatch(alertActions.success('Community ' + name + ' created.'));
 				},
-				error => dispatch(failure(error))
+				error => {
+					error.then(function (error) {
+						dispatch(failure(error.error))
+						dispatch(alertActions.error("There has been an error (" + error.error.status + ") creating the '" + community.name + "' Community: " + error.error.message));
+					});
+				}
 			);
 	};
 
 	function request() { return { type: communityConstants.CREATE_REQUEST } }
 	function success(community) { return { type: communityConstants.CREATE_SUCCESS, community } }
 	function failure(error) { return { type: communityConstants.CREATE_FAILURE, error } }
+}
+
+function join(type, community, password) {
+	return dispatch => {
+		dispatch(request());
+		communityService.join(type, community, password)
+			.then(
+				comm => {
+					dispatch(success(community));
+					history.push('/community/choose');
+					dispatch(alertActions.success('You\'ve joined to the \'' + community.name + '\' Community '));
+				},
+				error => {
+					error.then(function (error) {
+						dispatch(failure(error.error))
+						dispatch(alertActions.error("There has been an error (" + error.error.status + ") joining the '" + community.name + "' Community: " + error.error.message));
+					});
+				}
+			);
+	};
+
+	function request() { return { type: communityConstants.JOIN_REQUEST } }
+	function success(community) { return { type: communityConstants.JOIN_SUCCESS, community } }
+	function failure(error) { return { type: communityConstants.JOIN_FAILURE, error } }
 }
