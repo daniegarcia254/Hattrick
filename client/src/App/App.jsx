@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route } from 'react-router-dom';
+import { Router, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { history } from '../_helpers';
@@ -39,7 +39,7 @@ class App extends React.Component {
 									<PrivateRoute exact path="/community/choose" component={ChooseCommunityPage} />
 									<PrivateRoute exact path="/community/create" component={CreateCommunityPage} />
 									<PrivateRoute exact path="/community/:id/home" component={HomeCommunityPage} />
-									<Route exact path="/" component={LoginPage} />
+									<Route exact path="/" render={() => ( <Redirect to="/login" /> )} />
 									<Route path="/login" component={LoginPage} />
 									<Route path="/register" component={RegisterPage} />
 								</div>
