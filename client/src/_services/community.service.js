@@ -3,6 +3,7 @@ import { authHeader } from '../_helpers';
 export const communityService = {
 	getAll,
 	getUserCommunities,
+	getById,
 	create,
 	join,
 	//play,
@@ -34,6 +35,15 @@ function getUserCommunities(userId) {
 	};
 	let user = JSON.parse(localStorage.getItem('user'));
 	return fetch(API_URL + '/users/' + user.userId + '/communities', requestOptions).then(handleResponse);
+}
+
+function getById(id) {
+	const requestOptions = {
+		method: 'GET',
+		headers: authHeader()
+	};
+	let user = JSON.parse(localStorage.getItem('user'));
+	return fetch(API_URL + '/communities/' + id, requestOptions).then(handleResponse);
 }
 
 function join(type, community, password) {

@@ -6,6 +6,7 @@ import { history } from '../_helpers';
 export const communityActions = {
 	getAll,
 	getUserCommunities,
+	getById,
 	create,
 	join,
 	play
@@ -51,6 +52,27 @@ function getUserCommunities() {
 	function request() { return { type: communityConstants.GET_USER_COMMUNITIES_REQUEST } }
 	function success(communities) { return { type: communityConstants.GET_USER_COMMUNITIES_SUCCESS, communities } }
 	function failure(error) { return { type: communityConstants.GET_USER_COMMUNITIES_FAILURE, error } }
+}
+
+function getById(id) {
+	return dispatch => {
+		dispatch(request());
+
+		communityService.getById(id)
+			.then(
+			community => dispatch(success(community)),
+			error => {
+				error.then(function (error) {
+					dispatch(failure(error.error));
+					dispatch(alertActions.error("There has been an error (" + error.error.status + ") getting community info: " + error.error.message));
+				});
+			}
+			);
+	};
+
+	function request() { return { type: communityConstants.GET_COMMUNITY_REQUEST } }
+	function success(communities) { return { type: communityConstants.GET_COMMUNITY_SUCCESS, communities } }
+	function failure(error) { return { type: communityConstants.GET_COMMUNITY_FAILURE, error } }
 }
 
 function create(type, categoryID, name, password) {
@@ -112,7 +134,9 @@ function play(type, community, password) {
 						dispatch(success(community));
 						history.push('/community/'+community.id+'/home');
 					} else {
-
+						// [TODO]: For private community, check valid password
+						dispatch(success(community));
+						history.push('/community/' + community.id + '/home');
 					}
 				},
 				error => {

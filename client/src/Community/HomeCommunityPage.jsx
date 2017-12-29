@@ -10,15 +10,14 @@ class HomeCommunityPage extends React.Component {
 	constructor(props) {
 		super(props);
 
-		//this.state = {};
-		console.log("STATE", this.state);
-		console.log("PROPS", this.props);
+		this.state = {};
 	}
 
-	/*componentDidMount() {
-		this.props.dispatch(communityActions.getAll());
+	componentDidMount() {
+		let communityID = this.props.match.params.id;
+		this.props.dispatch(communityActions.getById());
 		this.props.dispatch(communityActions.getUserCommunities());
-	}*/
+	}
 
 	render() {
 		const { user } = this.props;
