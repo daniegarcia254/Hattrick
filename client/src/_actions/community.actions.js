@@ -7,7 +7,8 @@ export const communityActions = {
 	getAll,
 	getUserCommunities,
 	create,
-	join
+	join,
+	play
 };
 
 function getAll() {
@@ -19,7 +20,7 @@ function getAll() {
 				communities => dispatch(success(communities)),
 				error => {
 					error.then(function (error) {
-						dispatch(failure(error.error))
+						dispatch(failure(error.error));
 						dispatch(alertActions.error("There has been an error (" + error.error.status + ") getting the communities: " + error.error.message));
 					});
 				}
@@ -40,7 +41,7 @@ function getUserCommunities() {
 				communities => dispatch(success(communities)),
 				error => {
 					error.then(function (error) {
-						dispatch(failure(error.error))
+						dispatch(failure(error.error));
 						dispatch(alertActions.error("There has been an error (" + error.error.status + ") getting the user communities: " + error.error.message));
 					});
 				}
@@ -57,15 +58,15 @@ function create(type, categoryID, name, password) {
 		dispatch(request());
 		communityService.create({ type, categoryID, name, password })
 			.then(
-				community => {
-					dispatch(success(community));
+				createdCommunity => {
+					dispatch(success(createdCommunity));
 					history.push('/community/choose'); 
 					dispatch(alertActions.success('Community ' + name + ' created.'));
 				},
 				error => {
 					error.then(function (error) {
-						dispatch(failure(error.error))
-						dispatch(alertActions.error("There has been an error (" + error.error.status + ") creating the '" + community.name + "' Community: " + error.error.message));
+						dispatch(failure(error.error));
+						dispatch(alertActions.error("There has been an error (" + error.error.status + ") creating the '" + name + "' Community: " + error.error.message));
 					});
 				}
 			);
@@ -81,14 +82,14 @@ function join(type, community, password) {
 		dispatch(request());
 		communityService.join(type, community, password)
 			.then(
-				comm => {
+				joinedCommunity => {
 					dispatch(success(community));
 					history.push('/community/choose');
 					dispatch(alertActions.success('You\'ve joined to the \'' + community.name + '\' Community '));
 				},
 				error => {
 					error.then(function (error) {
-						dispatch(failure(error.error))
+						dispatch(failure(error.error));
 						dispatch(alertActions.error("There has been an error (" + error.error.status + ") joining the '" + community.name + "' Community: " + error.error.message));
 					});
 				}
@@ -98,4 +99,34 @@ function join(type, community, password) {
 	function request() { return { type: communityConstants.JOIN_REQUEST } }
 	function success(community) { return { type: communityConstants.JOIN_SUCCESS, community } }
 	function failure(error) { return { type: communityConstants.JOIN_FAILURE, error } }
+}
+
+function play(type, community, password) {
+	return dispatch => {
+		dispatch(request());
+		communityService.checkUserBelongs(community.id)
+			.then(
+				ok => {
+					console.log('Ok??');
+					if (type === 'public') {
+						dispatch(success(community));
+						history.push('/community/'+community.id+'/home');
+					} else {
+
+					}
+				},
+				error => {
+					dispatch(failure(error));
+					if (error.status === 404) {
+						dispatch(alertActions.error("User is not a member of '" + community.name + "' Community"));
+					} else {
+						dispatch(alertActions.error("There has been an error (" + error.status + ") checking user belongs to '" + community.name + "' Community: " + error.message));
+					}
+				}
+			);
+	};
+	
+	function request() { return { type: communityConstants.PLAY_REQUEST } }
+	function success(community) { return { type: communityConstants.PLAY_SUCCESS, community } }
+	function failure(error) { return { type: communityConstants.PLAY_FAILURE, error } }
 }

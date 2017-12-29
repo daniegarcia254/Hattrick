@@ -28,9 +28,9 @@ class ChooseCommunityPage extends React.Component {
 		};
 
 		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handlePublicSubmit = this.handlePublicSubmit.bind(this);
-		this.handlePrivateSubmit = this.handlePrivateSubmit.bind(this);
+		this.handlePlaySubmit = this.handlePlaySubmit.bind(this);
+		this.handleJoinPublicSubmit = this.handleJoinPublicSubmit.bind(this);
+		this.handleJoinPrivateSubmit = this.handleJoinPrivateSubmit.bind(this);
 		this.showPublicModal = this.showPublicModal.bind(this);
 		this.showPrivateModal = this.showPrivateModal.bind(this);
 		this.hidePublicModal = this.hidePublicModal.bind(this);
@@ -43,6 +43,7 @@ class ChooseCommunityPage extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+		// After join a community, reset page (hide modals and refresh info)
 		if (!prevProps.communities.joinLoaded && this.props.communities.joinLoaded) {
 			this.setState({ chosenPublic: '', chosenPrivate: '', submittedPublic: false, submittedPrivate: false });
 			this.hidePublicModal();
@@ -61,20 +62,21 @@ class ChooseCommunityPage extends React.Component {
 		}
 	}
 
-	handleSubmit(e) {
+	handlePlaySubmit(e) {
 		e.preventDefault();
 
 		this.setState({ submitted: true });
 		const { chosenCommunity, password, community } = this.state;
 		const { dispatch } = this.props;
 		if (community && community.type == 'PRIVATE' && password) {
-			//dispatch(communityActions.join('private', chosenCommunity, password));
+			dispatch(communityActions.play('private', community, password));
 		} else if (community && community.type == 'PUBLIC') {
-			//dispatch(communityActions.join('public', chosenCommunity, null));
+			console.log("CHOSEN COMMUNITY", community);
+			dispatch(communityActions.play('public', community, password));
 		}
 	}
 
-	handlePublicSubmit(e) {
+	handleJoinPublicSubmit(e) {
 		e.preventDefault();
 
 		this.setState({ submittedPublic: true });
@@ -86,7 +88,7 @@ class ChooseCommunityPage extends React.Component {
 		}
 	}
 
-	handlePrivateSubmit(e) {
+	handleJoinPrivateSubmit(e) {
 		e.preventDefault();
 
 		this.setState({ submittedPrivate: true });
@@ -143,40 +145,42 @@ class ChooseCommunityPage extends React.Component {
 								onClick={this.showPrivateModal}>Join Private Community</Button>
 						</div>
 					</div>
-					{userCommunities.items && userCommunities.items.length > 0 &&
-						<div className="row">
-							<div className="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-								<form name="form">
-									<div><label>OR</label></div>
-									<div className={'form-group' + (submitted && !chosenCommunity ? ' has-error' : '')}>
-										<label htmlFor="chosenCommunity">Choose one of your communities to play:</label>
-										<select className="form-control" name="chosenCommunity" defaultValue={chosenCommunity} onChange={this.handleChange} >
-											<option value=''></option>
-											{userCommunities.items.map((community, index) =>
-												<option key={community.id} value={community.code}>{community.name}</option>
-											)}
-										</select>
-										{submitted && !chosenCommunity &&
-											<div className="help-block">A community must be chosen to play!</div>
-										}
-									</div>
-									{community && community.type === 'PRIVATE' &&
-										<div className={'form-group' + (submitted && chosenCommunity && !password ? ' has-error' : '')}>
-											<input className="form-control" name="password" placeholder="Community password" onChange={this.handleChange} />
-											{submitted && chosenCommunity && !password &&
-												<div className="help-block">Password must be provided for a private community!</div>
+					<LoadMask loaded={communities.playLoaded === true}>
+						{userCommunities.items && userCommunities.items.length > 0 &&
+							<div className="row">
+								<div className="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+									<form name="form">
+										<div><label>OR</label></div>
+										<div className={'form-group' + (submitted && !chosenCommunity ? ' has-error' : '')}>
+											<label htmlFor="chosenCommunity">Choose one of your communities to play:</label>
+											<select className="form-control" name="chosenCommunity" defaultValue={chosenCommunity} onChange={this.handleChange} >
+												<option value=''></option>
+												{userCommunities.items.map((community, index) =>
+													<option key={community.id} value={community.code}>{community.name}</option>
+												)}
+											</select>
+											{submitted && !chosenCommunity &&
+												<div className="help-block">A community must be chosen to play!</div>
 											}
 										</div>
-									}
-									<div className="form-group">
-										<Button bsStyle="success" className="go-btn"
-											disabled={!userCommunities || !userCommunities.items || userCommunities.items.length === 0}
-											onClick={this.handleSubmit}>Play</Button>
-									</div>
-								</form>
+										{community && community.type === 'PRIVATE' &&
+											<div className={'form-group' + (submitted && chosenCommunity && !password ? ' has-error' : '')}>
+												<input className="form-control" name="password" placeholder="Community password" onChange={this.handleChange} />
+												{submitted && chosenCommunity && !password &&
+													<div className="help-block">Password must be provided for a private community!</div>
+												}
+											</div>
+										}
+										<div className="form-group">
+											<Button bsStyle="success" className="go-btn"
+												disabled={!userCommunities || !userCommunities.items || userCommunities.items.length === 0}
+												onClick={this.handlePlaySubmit}>Play</Button>
+										</div>
+									</form>
+								</div>
 							</div>
-						</div>
-					}
+						}
+					</LoadMask>
 				</LoadMask>
 				<div className="row">
 					<p> <Link to="/login">Logout</Link> </p>
@@ -212,7 +216,7 @@ class ChooseCommunityPage extends React.Component {
 						</LoadMask>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button bsStyle="success" onClick={this.handlePublicSubmit}>Join</Button>	
+						<Button bsStyle="success" onClick={this.handleJoinPublicSubmit}>Join</Button>	
 						<Button onClick={this.hidePublicModal}>Close</Button>
 					</Modal.Footer>
 				</Modal>
@@ -253,7 +257,7 @@ class ChooseCommunityPage extends React.Component {
 						</LoadMask>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button bsStyle="success" onClick={this.handlePrivateSubmit}>Join</Button>	
+						<Button bsStyle="success" onClick={this.handleJoinPrivateSubmit}>Join</Button>	
 						<Button onClick={this.hidePrivateModal}>Close</Button>
 					</Modal.Footer>
 				</Modal>

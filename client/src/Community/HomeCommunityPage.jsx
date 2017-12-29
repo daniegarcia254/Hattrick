@@ -7,6 +7,19 @@ import CommunityCSS from '../_css/Community.scss';
 
 class HomeCommunityPage extends React.Component {
 
+	constructor(props) {
+		super(props);
+
+		//this.state = {};
+		console.log("STATE", this.state);
+		console.log("PROPS", this.props);
+	}
+
+	/*componentDidMount() {
+		this.props.dispatch(communityActions.getAll());
+		this.props.dispatch(communityActions.getUserCommunities());
+	}*/
+
 	render() {
 		const { user } = this.props;
 		return (
