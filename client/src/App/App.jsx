@@ -38,6 +38,7 @@ class App extends React.Component {
 									<PrivateRoute exact path="/community/choose" component={ChooseCommunityPage} />
 									<PrivateRoute exact path="/community/create" component={CreateCommunityPage} />
 									<PrivateRoute exact path="/community/:id/home" component={HomeCommunityPage} />
+									<PrivateRoute exact path="/community/:id/table" component={HomeCommunityPage} />
 									<PrivateRoute exact path="/community/:id/settings" component={HomeCommunityPage} />
 									<PrivateRoute exact path="/community/:id/admin" component={HomeCommunityPage} />
 									<Route exact path="/" render={() => (<Redirect to="/login" />)} />
