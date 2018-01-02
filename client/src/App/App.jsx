@@ -27,23 +27,21 @@ class App extends React.Component {
 				<div>
 					<Header></Header>
 				</div>
-				<div className="jumbotron">
-					<div className="container">
-						<div className="row">
-							{alert.message &&
-								<div className={`alert ${alert.type}`}>{alert.message}</div>
-							}
-							<Router history={history}>
-								<div>
-									<PrivateRoute exact path="/community/choose" component={ChooseCommunityPage} />
-									<PrivateRoute exact path="/community/create" component={CreateCommunityPage} />
-									<PrivateRoute exact path="/community/:id/home" component={HomeCommunityPage} />
-									<Route exact path="/" render={() => ( <Redirect to="/login" /> )} />
-									<Route path="/login" component={LoginPage} />
-									<Route path="/register" component={RegisterPage} />
-								</div>
-							</Router>
-						</div>
+				<div className="container">
+					<div className="row">
+						{alert.message &&
+							<div className={`alert ${alert.type}`}>{alert.message}</div>
+						}
+						<Router history={history}>
+							<div>
+								<PrivateRoute exact path="/community/choose" component={ChooseCommunityPage} />
+								<PrivateRoute exact path="/community/create" component={CreateCommunityPage} />
+								<PrivateRoute exact path="/community/:id/home" component={HomeCommunityPage} />
+								<Route exact path="/" render={() => (<Redirect to="/login" />)} />
+								<Route path="/login" component={LoginPage} />
+								<Route path="/register" component={RegisterPage} />
+							</div>
+						</Router>
 					</div>
 				</div>
 			</div>
