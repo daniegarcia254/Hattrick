@@ -100,8 +100,9 @@ class CreateCommunityPage extends React.Component {
 									{communities.error && <span className="text-danger">Error creating community: {communities.error}</span>}
 								</div>
 								<div className="form-group">
-									<button className="btn btn-success" disabled={categories.error ? 'disabled' : ''}>Create</button>
+									<button className="btn btn-success create-btn" disabled={categories.error ? 'disabled' : ''}>Create</button>
 									{creatingCommunity && !communities.error && <img className="Loader" src={LoaderGif} />}
+									<Link to="/community/choose" className="btn btn-danger cancel-btn">Cancel</Link>
 								</div>
 							</form>
 						}
