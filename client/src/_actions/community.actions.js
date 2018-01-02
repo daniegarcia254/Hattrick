@@ -71,7 +71,7 @@ function getById(id) {
 	};
 
 	function request() { return { type: communityConstants.GET_COMMUNITY_REQUEST } }
-	function success(communities) { return { type: communityConstants.GET_COMMUNITY_SUCCESS, communities } }
+	function success(community) { return { type: communityConstants.GET_COMMUNITY_SUCCESS, community } }
 	function failure(error) { return { type: communityConstants.GET_COMMUNITY_FAILURE, error } }
 }
 

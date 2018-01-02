@@ -14,3 +14,12 @@ html, body, #app, #app>div {
 	top: 50%;
 	left: 50%;
 }
+
+@media (min-width: 768px) {
+	.navbar-right {
+		margin-right: 0px;
+	}
+	.navbar-collapse, .navbar > .container {
+		padding-left: 0px;
+	}
+}

@@ -31,7 +31,7 @@ export function communities(state = {}, action) {
 			return { communitiesLoaded: true, createLoaded: true, joinLoaded: false, playLoaded: false };
 		}
 		case communityConstants.GET_COMMUNITY_REQUEST: {
-			return { gettingLoaded: false};
+			return { getCurrentCommunityLoaded: false};
 		}
 		case communityConstants.GET_ALL_SUCCESS: {
 			return { items: action.communities, communitiesLoaded: true, createLoaded: true, joinLoaded: true, playLoaded:true };
@@ -46,7 +46,7 @@ export function communities(state = {}, action) {
 			return { community: action.community, communitiesLoaded: true, createLoaded: true, joinLoaded: true, playLoaded: true };
 		}
 		case communityConstants.GET_COMMUNITY_SUCCESS: {
-			return { gettingLoaded: true };
+			return { current: action.community, getCurrentCommunityLoaded: true };
 		}
 		case communityConstants.GET_ALL_FAILURE: {
 			return { error: action.error, communitiesLoaded: true, createLoaded: true, joinLoaded: true, playLoaded:true };
@@ -61,7 +61,7 @@ export function communities(state = {}, action) {
 			return { error: action.error, communitiesLoaded: true, createLoaded: true, joinLoaded: true, playLoaded: true };
 		}
 		case communityConstants.GET_COMMUNITY_FAILURE: {
-			return { gettingLoaded: true };
+			return { getCurrentCommunityLoaded: true };
 		}
 		default:
 			return state

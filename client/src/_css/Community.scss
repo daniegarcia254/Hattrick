@@ -11,7 +11,7 @@
 	}
 }
 
-.ChooseCommunityMain, .HomeCommunityMain {
+.ChooseCommunityMain {
 	text-align: center;
 	.row {
 		margin-top: 20px;
@@ -19,7 +19,17 @@
 	}
 }
 
-.CreateCommunityMain {
+.HomeCommunityMain {
+	text-align: center;
+	th:nth-child(2) {
+		text-align: center;
+	}
+	tbody > tr > td:nth-child(1) {
+		text-align: left;
+	}
+}
+
+.CreateCommunityMain, .HomeCommunityMain {
 	.row:nth-child(1){
 		text-align: center;
 	}

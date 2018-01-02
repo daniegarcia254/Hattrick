@@ -43,7 +43,8 @@ function getById(id) {
 		headers: authHeader()
 	};
 	let user = JSON.parse(localStorage.getItem('user'));
-	return fetch(API_URL + '/communities/' + id, requestOptions).then(handleResponse);
+	let filter = 'filter={ "include": ["users"] }';
+	return fetch(API_URL + '/communities/' + id + '?' + filter, requestOptions).then(handleResponse);
 }
 
 function join(type, community, password) {

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import LoadMask from 'react-loader';
 
+import { NavigationBar } from '../_components';
 import { communityActions } from '../_actions';
 import CommunityCSS from '../_css/Community.scss';
 
@@ -15,33 +17,53 @@ class HomeCommunityPage extends React.Component {
 
 	componentDidMount() {
 		let communityID = this.props.match.params.id;
-		this.props.dispatch(communityActions.getById());
-		this.props.dispatch(communityActions.getUserCommunities());
+		this.props.dispatch(communityActions.getById(communityID));
 	}
 
 	render() {
-		const { user } = this.props;
+		const { user, communities} = this.props;
 		return (
-			<div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 HomeCommunityMain">
-				<div className="row">
-					<div className="col-md-12">
-						<h1>Hi {user.name}!</h1>
-						<h3>Welcome to your community</h3>
+			<div className="col-xs-12 col-sm-12 col-md-12 HomeCommunityMain">
+				{communities && communities.current &&
+					<NavigationBar {...this.props}></NavigationBar>
+				}
+				<LoadMask loaded={communities.getCurrentCommunityLoaded === true}>
+					<div className="row">
+						{communities && communities.current && communities.current.users &&
+							<h4>{communities.current.name} community</h4>
+						}
+						<div className="col-md-10 col-md-offset-1">
+							<div className="table-responsive">
+								<table className="table table-striped table-hover table-condensed">
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>Score</th>
+										</tr>
+									</thead>
+									{communities && communities.current && communities.current.users &&
+										<tbody>
+											{communities.current.users.map((user, index) =>
+												<tr key={user.id}><td>{user.name}</td><td>0</td></tr>
+											)}
+										</tbody>	
+									}	
+								</table>
+							</div>
+						</div>
 					</div>
-				</div>
-				<div className="row">
-					<p> <Link to="/login">Logout</Link> </p>
-				</div>
+				</LoadMask>
 			</div>
 		);
 	}
 }
 
 function mapStateToProps(state) {
-	const { authentication } = state;
+	const { communities, authentication } = state;
 	const { user } = authentication;
 	return {
-		user
+		user,
+		communities
 	};
 }
 

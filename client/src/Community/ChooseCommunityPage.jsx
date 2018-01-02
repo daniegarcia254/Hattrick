@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
-import LoadMask from 'react-loader'
+import LoadMask from 'react-loader';
 
 import { communityActions } from '../_actions';
 import CommunityCSS from '../_css/Community.scss';
