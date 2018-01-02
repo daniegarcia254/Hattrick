@@ -17,10 +17,15 @@ export const NavigationBar = (props) => {
 					<LinkContainer to={'/community/' + props.communities.current.id + '/settings'}>
 						<NavItem eventKey={2}>Settings</NavItem>
 					</LinkContainer>
+					{props.communities.current.adminID === props.user.userId &&
+						<LinkContainer to={'/community/' + props.communities.current.id + '/admin'}>
+							<NavItem eventKey={3}>Admin</NavItem>
+						</LinkContainer>
+					}
 				</Nav>
 				<Nav pullRight>
 					<LinkContainer to="/login">
-						<NavItem eventKey={3}>{props.user.name} (Logout)</NavItem>
+						<NavItem eventKey={4}>{props.user.name} (Logout)</NavItem>
 					</LinkContainer>
 				</Nav>
 			</Navbar.Collapse>
