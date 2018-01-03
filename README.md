@@ -21,7 +21,7 @@ It includes three different containers:
 
 By default:
 - The REST API will be available in: [http://localhost:10002/explorer](http://localhost:10002/explorer)
-- The WebApp will be available in: [http://localhost:10004/hattrick](http://localhost:10004/hattrick)
+- The WebApp will be available in: [http://localhost:10006/hattrick](http://localhost:10006/hattrick)
 
 ## Configuration
 #### REST API
