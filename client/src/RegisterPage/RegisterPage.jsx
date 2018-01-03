@@ -51,7 +51,7 @@ class RegisterPage extends React.Component {
     }
 
     render() {
-        const { registering } = this.props;
+        const { registering, base } = this.props;
         const { user, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3 RegisterPage">
@@ -101,7 +101,7 @@ class RegisterPage extends React.Component {
                         {registering &&
                             <img className="Loader" src={LoaderGif} />
                         }
-                        <Link to="/login" className="btn btn-danger cancel-btn">Cancel</Link>
+                        <Link to={base + "/login"} className="btn btn-danger cancel-btn">Cancel</Link>
                     </div>
                 </form>
             </div>
@@ -112,7 +112,8 @@ class RegisterPage extends React.Component {
 function mapStateToProps(state) {
     const { registering } = state.registration;
     return {
-        registering
+        registering,
+        base: SERVER_ROOT
     };
 }
 

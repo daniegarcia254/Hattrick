@@ -82,7 +82,7 @@ function create(type, categoryID, name, password) {
 			.then(
 				createdCommunity => {
 					dispatch(success(createdCommunity));
-					history.push('/community/choose'); 
+					history.push(SERVER_ROOT + '/community/choose'); 
 					dispatch(alertActions.success('Community ' + name + ' created.'));
 				},
 				error => {
@@ -106,7 +106,7 @@ function join(type, community, password) {
 			.then(
 				joinedCommunity => {
 					dispatch(success(community));
-					history.push('/community/choose');
+					history.push(SERVER_ROOT + '/community/choose');
 					dispatch(alertActions.success('You\'ve joined to the \'' + community.name + '\' Community '));
 				},
 				error => {
@@ -132,11 +132,11 @@ function play(type, community, password) {
 					console.log('Ok??');
 					if (type === 'public') {
 						dispatch(success(community));
-						history.push('/community/'+community.id+'/home');
+						history.push(SERVER_ROOT + '/community/'+community.id+'/home');
 					} else {
 						// [TODO]: For private community, check valid password
 						dispatch(success(community));
-						history.push('/community/' + community.id + '/home');
+						history.push(SERVER_ROOT + '/community/' + community.id + '/home');
 					}
 				},
 				error => {

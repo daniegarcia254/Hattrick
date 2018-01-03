@@ -41,7 +41,7 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        const { loggingIn } = this.props;
+        const { loggingIn, base } = this.props;
         const { username, password, submitted } = this.state;
         return (
             <div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 LoginPage">
@@ -76,7 +76,7 @@ class LoginPage extends React.Component {
                         </div>
                         <div className="row">
                             <div className="col-xs-12 col-sm-12 col-md-12">
-                                <Link to="/register" className="btn btn-primary register-btn">Register</Link>
+                                <Link to={base + "/register"} className="btn btn-primary register-btn">Register</Link>
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,8 @@ class LoginPage extends React.Component {
 function mapStateToProps(state) {
     const { loggingIn } = state.authentication;
     return {
-        loggingIn
+        loggingIn,
+        base: SERVER_ROOT
     };
 }
 

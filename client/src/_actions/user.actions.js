@@ -24,7 +24,7 @@ function login(username, password) {
                                 var userInfo = Object.assign({}, currentUser, user);
                                 localStorage.setItem('user', JSON.stringify(userInfo));
                                 dispatch(success(userInfo));
-                                history.push('/community/choose');
+                                history.push(SERVER_ROOT + '/community/choose');
                             },
                             error => {
                                 error.then(error => {
@@ -66,7 +66,7 @@ function register(user) {
                 user => {
                     console.log('Success registering user', user);
                     dispatch(success());
-                    history.push('/login');
+                    history.push(SERVER_ROOT + '/login');
                     dispatch(alertActions.success('Registration successful'));
                 },
                 error => {

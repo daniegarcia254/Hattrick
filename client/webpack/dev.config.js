@@ -6,7 +6,8 @@ module.exports = merge(baseConfig, {
 	plugins: [
 		new webpack.DefinePlugin({
 			"API_URL": '"http://danigarcia-dev.com:10002/api"',
-			"NODE_ENV": "dev"
+			"NODE_ENV": "dev",
+			"SERVER_ROOT": "''"
 		})
 	]
 });

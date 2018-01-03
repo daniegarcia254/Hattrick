@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoadMask from 'react-loader';
 
@@ -21,7 +20,7 @@ class HomeCommunityPage extends React.Component {
 	}
 
 	render() {
-		const { user, communities} = this.props;
+		const { user, communities, base } = this.props;
 		return (
 			<div className="col-xs-12 col-sm-12 col-md-12 HomeCommunityMain">
 				{communities && communities.current &&
@@ -63,7 +62,8 @@ function mapStateToProps(state) {
 	const { user } = authentication;
 	return {
 		user,
-		communities
+		communities,
+		base: SERVER_ROOT
 	};
 }
 

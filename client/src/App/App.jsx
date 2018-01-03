@@ -21,31 +21,32 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { alert } = this.props;
+		const { alert,base } = this.props;
 		return (
 			<div>
 				<div>
 					<Header></Header>
 				</div>
 				<div className="container">
-					<div className="row">
+					<div className="row row-alert">
 						{alert.message &&
 							<div className={`alert ${alert.type}`}>{alert.message}</div>
 						}
 						<Router history={history}>
 							<div>
 								<Switch>	
-									<PrivateRoute exact path="/community/choose" component={ChooseCommunityPage} />
-									<PrivateRoute exact path="/community/create" component={CreateCommunityPage} />
-									<PrivateRoute exact path="/community/:id/home" component={HomeCommunityPage} />
-									<PrivateRoute exact path="/community/:id/table" component={HomeCommunityPage} />
-									<PrivateRoute exact path="/community/:id/settings" component={HomeCommunityPage} />
-									<PrivateRoute exact path="/community/:id/admin" component={HomeCommunityPage} />
-									<Route exact path="/" render={() => (<Redirect to="/login" />)} />
-									<Route path="/login" component={LoginPage} />
-									<Route path="/register" component={RegisterPage} />
-									<NoRouteMatch/>
-								</Switch>	
+									<PrivateRoute exact path={base + "/community/choose"} component={ChooseCommunityPage} base={base} />
+									<PrivateRoute exact path={base + "/community/create"} component={CreateCommunityPage} base={base} />
+									<PrivateRoute exact path={base + "/community/:id/home"} component={HomeCommunityPage} base={base} />
+									<PrivateRoute exact path={base + "/community/:id/table"} component={HomeCommunityPage} base={base} />
+									<PrivateRoute exact path={base + "/community/:id/settings"} component={HomeCommunityPage} base={base} />
+									<PrivateRoute exact path={base + "/community/:id/admin"} component={HomeCommunityPage} base={base} />
+									<Route exact path="/" render={() => (<Redirect to={base + "/login"} />)} />
+									<Route exact path={base + "/"} render={() => (<Redirect to={base + "/login"} />)} />
+									<Route path={base + "/login"} component={LoginPage} />
+									<Route path={base + "/register"} component={RegisterPage} />
+									<NoRouteMatch base={base}/>
+								</Switch>
 							</div>
 						</Router>
 					</div>
@@ -58,7 +59,8 @@ class App extends React.Component {
 function mapStateToProps(state) {
 	const { alert } = state;
 	return {
-		alert
+		alert,
+		base: SERVER_ROOT
 	};
 }
 

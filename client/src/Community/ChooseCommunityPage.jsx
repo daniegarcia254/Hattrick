@@ -120,7 +120,7 @@ class ChooseCommunityPage extends React.Component {
 			chosenPublic, submittedPublic, showPublic,
 			chosenPrivate, passwordPrivate, submittedPrivate, showPrivate
 		} = this.state;
-		const { user, communities, notUserCommunities, userCommunities, publicCommunities, privateCommunities } = this.props;
+		const { user, communities, notUserCommunities, userCommunities, publicCommunities, privateCommunities, base } = this.props;
 		return (
 			<div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-10 col-md-offset-1 ChooseCommunityMain">
 				<div className="row">
@@ -132,7 +132,7 @@ class ChooseCommunityPage extends React.Component {
 				<LoadMask loaded={userCommunities.userCommunitiesLoaded===true}>
 					<div className="row">
 						<div className="col-sm-3 col-sm-offset-3 col-md-1 col-md-pull-3 community-btn">
-							<Link className="btn btn-success btn-lg" to="/community/create">Create new Community</Link>
+							<Link className="btn btn-success btn-lg" to={base + "/community/create"}>Create new Community</Link>
 						</div>
 						<div className="col-sm-8 col-sm-pull-1 col-md-3 col-md-offset-1 community-btn">
 							<Button bsStyle="primary" bsSize="large"
@@ -183,7 +183,7 @@ class ChooseCommunityPage extends React.Component {
 					</LoadMask>
 				</LoadMask>
 				<div className="row">
-					<p> <Link to="/login">Logout</Link> </p>
+					<p> <Link to={base + "/login"}>Logout</Link> </p>
 				</div>
 
 				{/* Modal to join public community*/}
@@ -278,7 +278,8 @@ function mapStateToProps(state) {
 		userCommunities,
 		notUserCommunities,
 		publicCommunities,
-		privateCommunities
+		privateCommunities,
+		base: SERVER_ROOT
 	};
 }
 

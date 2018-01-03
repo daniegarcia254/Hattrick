@@ -49,7 +49,7 @@ class CreateCommunityPage extends React.Component {
 
 	render() {
 		const { type, categoryID, name, password, submitted, creatingCommunity } = this.state;
-		const { user, categories, communities } = this.props;
+		const { user, categories, communities, base } = this.props;
 		return (
 			<div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 CreateCommunityMain">
 				<div className="row">
@@ -102,7 +102,7 @@ class CreateCommunityPage extends React.Component {
 								<div className="form-group">
 									<button className="btn btn-success create-btn" disabled={categories.error ? 'disabled' : ''}>Create</button>
 									{creatingCommunity && !communities.error && <img className="Loader" src={LoaderGif} />}
-									<Link to="/community/choose" className="btn btn-danger cancel-btn">Cancel</Link>
+									<Link to={base + "/community/choose"} className="btn btn-danger cancel-btn">Cancel</Link>
 								</div>
 							</form>
 						}
@@ -119,7 +119,8 @@ function mapStateToProps(state) {
 	return {
 		user,
 		categories,
-		communities
+		communities,
+		base: SERVER_ROOT
 	};
 }
 
