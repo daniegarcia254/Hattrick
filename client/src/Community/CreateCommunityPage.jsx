@@ -21,6 +21,7 @@ class CreateCommunityPage extends React.Component {
 			creatingCommunity: false
 		};
 
+		this.handleKeyPress = this.handleKeyPress.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -29,13 +30,19 @@ class CreateCommunityPage extends React.Component {
 		this.props.dispatch(categoryActions.getAll());
 	}
 
+	handleKeyPress(event) {
+		if (event.key == 'Enter') {
+			this.handleSubmit();
+		}
+	}
+
 	handleChange(e) {
 		const { name, value } = e.target;
 		this.setState({ [name]: value });
 	}
 
 	handleSubmit(e) {
-		e.preventDefault();
+		if (e) e.preventDefault();
 
 		this.setState({ submitted: true, creatingCommunity: true });
 		const { type, categoryID, name, password } = this.state;
@@ -82,7 +89,8 @@ class CreateCommunityPage extends React.Component {
 								</div>
 								<div className={'form-group' + (submitted && !name ? ' has-error' : '')}>
 									<label htmlFor="name">Name</label>
-									<input type="text" className="form-control" name="name" placeholder="Community name" onChange={this.handleChange} />
+									<input type="text" className="form-control" name="name" placeholder="Community name"
+										onChange={this.handleChange} onKeyPress={this.handleKeyPress} />
 									{submitted && !name &&
 										<div className="help-block">Name is required</div>
 									}
@@ -90,7 +98,8 @@ class CreateCommunityPage extends React.Component {
 								{type && type === "PRIVATE" &&
 									<div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
 										<label htmlFor="password">Password</label>
-										<input type="password" className="form-control" name="password" placeholder="Community password" onChange={this.handleChange} />
+										<input type="password" className="form-control" name="password" placeholder="Community password"
+											onChange={this.handleChange} onKeyPress={this.handleKeyPress} />
 										{submitted && !password &&
 											<div className="help-block">Password is required</div>
 										}

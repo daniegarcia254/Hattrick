@@ -23,8 +23,15 @@ class RegisterPage extends React.Component {
             submitted: false
         };
 
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleKeyPress(event) {
+        if (event.key == 'Enter') {
+            this.handleSubmit();
+        }
     }
 
     handleChange(event) {
@@ -39,7 +46,7 @@ class RegisterPage extends React.Component {
     }
 
     handleSubmit(event) {
-        event.preventDefault();
+        if (event) event.preventDefault();
 
         this.setState({ submitted: true });
         const { user } = this.state;
@@ -63,35 +70,40 @@ class RegisterPage extends React.Component {
                 <form name="form">
                     <div className={'form-group' + (submitted && !user.firstName ? ' has-error' : '')}>
                         <label htmlFor="firstName">First Name</label>
-                        <input type="text" className="form-control" name="firstName" value={user.firstName} onChange={this.handleChange} />
+                        <input type="text" className="form-control" name="firstName" value={user.firstName}
+                            onChange={this.handleChange} onKeyPress={this.handleKeyPress} />
                         {submitted && !user.firstName &&
                             <div className="help-block">First Name is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.lastName ? ' has-error' : '')}>
                         <label htmlFor="lastName">Last Name</label>
-                        <input type="text" className="form-control" name="lastName" value={user.lastName} onChange={this.handleChange} />
+                        <input type="text" className="form-control" name="lastName" value={user.lastName}
+                            onChange={this.handleChange} onKeyPress={this.handleKeyPress} />
                         {submitted && !user.lastName &&
                             <div className="help-block">Last Name is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.email ? ' has-error' : '')}>
                         <label htmlFor="email">Email</label>
-                        <input type="email" className="form-control" name="email" value={user.email} onChange={this.handleChange} />
+                        <input type="email" className="form-control" name="email" value={user.email}
+                            onChange={this.handleChange} onKeyPress={this.handleKeyPress} />
                         {submitted && !user.email &&
                             <div className="help-block">Email is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.username ? ' has-error' : '')}>
                         <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value={user.username} onChange={this.handleChange} />
+                        <input type="text" className="form-control" name="username" value={user.username}
+                            onChange={this.handleChange} onKeyPress={this.handleKeyPress} />
                         {submitted && !user.username &&
                             <div className="help-block">Username is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
                         <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" value={user.password} onChange={this.handleChange} />
+                        <input type="password" className="form-control" name="password" value={user.password}
+                            onChange={this.handleChange} onKeyPress={this.handleKeyPress} />
                         {submitted && !user.password &&
                             <div className="help-block">Password is required</div>
                         }
