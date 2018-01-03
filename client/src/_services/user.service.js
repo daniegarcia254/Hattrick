@@ -5,7 +5,8 @@ export const userService = {
     logout,
     register,
     getById,
-    update
+    update,
+    requestPasswordReset
 };
 
 function login(username, password) {
@@ -68,6 +69,16 @@ function update(user) {
     };
 
     return fetch(API_URL + '/users/' + user.id, requestOptions).then(handleResponse);;
+}
+
+function requestPasswordReset(email) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({email})
+    };
+
+    return fetch(API_URL + '/resetPasswordRequests', requestOptions).then(handleResponse);;
 }
 
 function handleResponse(response) {

@@ -90,6 +90,9 @@ class LoginPage extends React.Component {
                         </div>
                     </div>
                 </form>
+                <div>
+                    <Link to={base + "/reset"} className="forgot-password-btn">Have you forgotten your password?</Link>
+                </div>    
             </div>
         );
     }

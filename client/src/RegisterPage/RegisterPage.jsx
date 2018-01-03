@@ -66,7 +66,7 @@ class RegisterPage extends React.Component {
                     <div className="col-sm-12 col-md-12">
                         <h2>Register</h2>
                     </div>
-                </div>  
+                </div>
                 <form name="form">
                     <div className={'form-group' + (submitted && !user.firstName ? ' has-error' : '')}>
                         <label htmlFor="firstName">First Name</label>

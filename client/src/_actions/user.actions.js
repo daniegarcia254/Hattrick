@@ -6,7 +6,8 @@ import { history } from '../_helpers';
 export const userActions = {
     login,
     logout,
-    register
+    register,
+    requestPasswordReset
 };
 
 function login(username, password) {
@@ -81,4 +82,30 @@ function register(user) {
     function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
     function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
+}
+
+function requestPasswordReset(email) {
+    return dispatch => {
+        dispatch(request(email));
+
+        userService.requestPasswordReset(email)
+            .then(
+                request => {
+                    console.log('Success sending reset password request', request);
+                    dispatch(success());
+                    history.push(SERVER_ROOT + '/login');
+                    dispatch(alertActions.success('Reset password request successfully sent to ' + email));
+                },
+                error => {
+                    error.then(error => {
+                        dispatch(failure(error.error))
+                        dispatch(alertActions.error("There has been an error (" + error.error.status + ") sending the reset password request: " + error.error.message));
+                    });
+                }
+            );
+    };
+
+    function request(email) { return { type: userConstants.REQUEST_PASSWORD_RESET_REQUEST, email } }
+    function success(request) { return { type: userConstants.REQUEST_PASSWORD_RESET_SUCCESS, request } }
+    function failure(error) { return { type: userConstants.REQUEST_PASSWORD_RESET_FAILURE, error } }
 }
