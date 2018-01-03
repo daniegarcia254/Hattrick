@@ -3,9 +3,13 @@ import { userConstants } from '../_constants';
 export function users(state = {}, action) {
   switch (action.type) {
     case userConstants.GETALL_REQUEST:
-    case userConstants.GET_USER_COMMUNITIES_REQUEST:  
+    case userConstants.GET_USER_COMMUNITIES_REQUEST:
       return {
         loading: true
+      };
+    case userConstants.REQUEST_PASSWORD_RESET_REQUEST:
+      return {
+        reseting: true
       };
     case userConstants.GETALL_SUCCESS:
       return {
@@ -15,8 +19,13 @@ export function users(state = {}, action) {
       return {
         items: action.communities
       };
+    case userConstants.REQUEST_PASSWORD_RESET_SUCCESS:
+      return {
+        request: action.request
+      };
     case userConstants.GETALL_FAILURE:
-    case userConstants.GET_USER_COMMUNITIES_FAILURE: 
+    case userConstants.GET_USER_COMMUNITIES_FAILURE:
+    case userConstants.REQUEST_PASSWORD_RESET_FAILURE:
       return { 
         error: action.error
       };

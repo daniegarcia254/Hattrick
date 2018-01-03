@@ -7,6 +7,7 @@ import { alertActions } from '../_actions';
 import { PrivateRoute, NoRouteMatch, Header } from '../_components';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
+import { ForgotPasswordPage } from '../ForgotPasswordPage';
 import { ChooseCommunityPage, CreateCommunityPage, HomeCommunityPage} from '../Community';
 
 class App extends React.Component {
@@ -45,6 +46,7 @@ class App extends React.Component {
 									<Route exact path={base + "/"} render={() => (<Redirect to={base + "/login"} />)} />
 									<Route path={base + "/login"} component={LoginPage} />
 									<Route path={base + "/register"} component={RegisterPage} />
+									<Route path={base + "/reset"} component={ForgotPasswordPage} />
 									<NoRouteMatch base={base}/>
 								</Switch>
 							</div>
