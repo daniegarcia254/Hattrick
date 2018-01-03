@@ -13,7 +13,7 @@ class ForgotPasswordPage extends React.Component {
 		super(props);
 
 		this.state = {
-			email,
+			email: '',
 			submitted: false
 		};
 
@@ -24,7 +24,7 @@ class ForgotPasswordPage extends React.Component {
 
 	handleKeyPress(event) {
 		if (event.key == 'Enter') {
-			this.handleSubmit();
+			this.handleSubmit(event);
 		}
 	}
 
@@ -45,30 +45,28 @@ class ForgotPasswordPage extends React.Component {
 	}
 
 	render() {
-		const { users, base } = this.props;
+		const { reseting, base } = this.props;
 		const { email, submitted } = this.state;
+		console.log("PROPS", this.props, this.state);
 		return (
-			<div className="col-md-6 col-md-offset-3 ForgotPasswordPage">
+			<div className="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 ForgotPasswordPage">
 				<div className="row register-title">
-					<div className="col-sm-12 col-md-12">
-						<h3><small>Please, introduce your email and press the <em>Send</em> button,
-						so you can receive a link for reset your account password</small></h3>
+					<div className="col-xs-12 col-sm-12 col-md-12">
+						<h4><small>Please, introduce your email address and press the <em>Send</em> button.
+						An email will be sent to you with a link for reset your account password</small></h4>
 					</div>
 				</div>
 				<form name="form">
-					<div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
+					<div className={'form-group' + (submitted && (!email || !validator.isEmail(email)) ? ' has-error' : '')}>
 						<label htmlFor="email">Email</label>
 						<input type="text" className="form-control" name="email" value={email}
 							onChange={this.handleChange} onKeyPress={this.handleKeyPress} />
-						{submitted && !email &&
-							<div className="help-block">Email is required</div>
-						}
+						{submitted && !email && <div className="help-block">Email is required</div> }
+						{submitted && email && !validator.isEmail(email) && <div className="help-block">Email is not valid</div> }
 					</div>
 					<div className="form-group">
 						<Button bsStyle="success" className="send-btn" onClick={this.handleSubmit}>Send</Button>
-						{users && users.reseting &&
-							<img className="Loader" src={LoaderGif} />
-						}
+						{reseting === true && <img className="Loader" src={LoaderGif} /> }
 						<Link to={base + "/login"} className="btn btn-danger cancel-btn">Cancel</Link>
 					</div>
 				</form>
@@ -78,9 +76,9 @@ class ForgotPasswordPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-	const { users } = state.users;
+	const { reseting } = state.users;
 	return {
-		users,
+		reseting,
 		base: SERVER_ROOT
 	};
 }

@@ -30,12 +30,14 @@ class App extends React.Component {
 				</div>
 				<div className="container">
 					<div className="row row-alert">
-						{alert.message &&
-							<div className={`alert ${alert.type}`}>{alert.message}</div>
-						}
+						<div className="col-xs-10 col-xs-offset-1">
+							{alert.message &&
+								<div className={`alert ${alert.type}`}>{alert.message}</div>
+							}
+						</div>
 						<Router history={history}>
 							<div>
-								<Switch>	
+								<Switch>
 									<PrivateRoute exact path={base + "/community/choose"} component={ChooseCommunityPage} base={base} />
 									<PrivateRoute exact path={base + "/community/create"} component={CreateCommunityPage} base={base} />
 									<PrivateRoute exact path={base + "/community/:id/home"} component={HomeCommunityPage} base={base} />

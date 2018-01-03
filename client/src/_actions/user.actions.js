@@ -87,7 +87,7 @@ function register(user) {
 function requestPasswordReset(email) {
     return dispatch => {
         dispatch(request(email));
-        
+
         userService.requestPasswordReset(email)
             .then(
                 request => {
