@@ -5,12 +5,22 @@ services:
     links:
       - hattrick_db
     build:
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-back
       context: .
     expose:
       - "10002"
     ports:
       - "10002:10002"
+    privileged: true
+  hattrick_front:
+    container_name: hattrick_front
+    build:
+      context: .
+      dockerfile: Dockerfile-front
+    expose:
+      - "80"
+    ports:
+      - "10006:80"
     privileged: true
   hattrick_db:
     image: mysql:5.5

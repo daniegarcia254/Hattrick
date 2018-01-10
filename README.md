@@ -1,9 +1,9 @@
 # Loopback-API-Hattrick
 Example of a **Loopback REST API** that can be used as base for a community game where users can register, login, join to differents communities, post comments, etc.
 
-Initially the API was created to be used in a game (_Hattrick_) where users would answers, everyday, 3 questions related to the community category, winning points and competing against the rest of the community users.
-
 The API is prepared to work only with logged users, using authentication tokens. Users can also reset their passwords, and they will receive emails when they register or change their password.
+
+Initially the API was created to be used in a game (_Hattrick_) where users would answers, everyday, 3 questions related to the community category, winning points and competing against the rest of the community users. An initial version of this webapp can be found in the [client](client/) folder of this repo. A webapp built with **ReactJS + Redux + React-Router**.
 
 ## Deploy
 
@@ -14,14 +14,16 @@ docker-compose build;
 docker-compose up;
 ```
 
-It includes two different containers:
+It includes three different containers:
 - *hattrick*: where the API will be deployed with PM2
 - *hattrick_db*: where the database will be hosted
+- *hattrick_front*: where the web-app will be deployed
 
-By default the REST API will be available in: [http://localhost:10002/explorer](http://localhost:10002/explorer)
+By default:
+- The REST API will be available in: [http://localhost:10002/explorer](http://localhost:10002/explorer)
+- The WebApp will be available in: [http://localhost:10006/hattrick](http://localhost:10006/hattrick)
 
 ## Configuration
-
 #### REST API
 Edit the [start.config.json](start.config.json) to set the following env vars:
 
