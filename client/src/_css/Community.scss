@@ -1,0 +1,42 @@
+.ChooseCommunityMain {
+	form > div:nth-child(1) {
+		margin-top: 20px;
+	}
+	.go-btn {
+		width: 100px;
+	}
+
+	.community-btn {
+		margin-top: 20px;
+	}
+}
+
+.ChooseCommunityMain {
+	text-align: center;
+	.row {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+}
+
+.HomeCommunityMain {
+	text-align: center;
+	th:nth-child(2) {
+		text-align: center;
+	}
+	tbody > tr > td:nth-child(1) {
+		text-align: left;
+	}
+}
+
+.CreateCommunityMain, .HomeCommunityMain {
+	.row:nth-child(1){
+		text-align: center;
+	}
+	.cancel-btn {
+		margin-left: 30px;
+	}
+	.create-btn {
+		width: 150px;
+	}
+}
