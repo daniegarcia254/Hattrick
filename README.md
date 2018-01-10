@@ -1,13 +1,13 @@
-# Loopback-API-Hattrick
-Example of a **Loopback REST API** that can be used as base for a community game where users can register, login, join to differents communities, post comments, etc.
+# Hattrick
+Hattrick is a **ReactJS + Redux + React-Router** webapp tha be used as base for a community game where users can register, login, join to differents communities, post comments, etc.
 
-The API is prepared to work only with logged users, using authentication tokens. Users can also reset their passwords, and they will receive emails when they register or change their password.
+The base of the game is that users would answers, everyday, 3 questions related to the community category, winning points and competing against the rest of the community users. An initial version of this webapp can be found in the [client](client/) folder of this repo.
 
-Initially the API was created to be used in a game (_Hattrick_) where users would answers, everyday, 3 questions related to the community category, winning points and competing against the rest of the community users. An initial version of this webapp can be found in the [client](client/) folder of this repo. A webapp built with **ReactJS + Redux + React-Router**.
+All of this can be made thanks a powerful **REST API developed with Loopback**. The API is prepared to work only with logged users, using authentication tokens. Users can also reset their passwords, join public and privates communities. An email system is implemented as well, and users will receive emails when they register or change their password.
 
 ## Deploy
 
-The easiest way to deploy the API is using Docker:
+The easiest way to deploy the WebApp and the API is using Docker:
 
 ```
 docker-compose build;
