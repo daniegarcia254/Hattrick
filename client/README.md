@@ -1,7 +1,7 @@
 # ReactJS Webapp - _Hattrick_
 The webapp is based on [React + Redux - User Registration and Login Tutorial & Example](https://github.com/cornflourblue/react-redux-registration-login-example), adding to it the use of **_React-Router_**.
 
-Given that as base code, a webapp has been built to allow users to register, login, reset their passwords, create communities, join communities, etc.. all of that making use of the [**Loopback REST API** developed for this.](../)
+Given that as base code, a webapp has been built to allow users to register, login, reset their passwords, create communities, join communities, etc.. all of that making use of the [**Loopback REST API** developed for this.](https://github.com/daniegarcia254/Loopback-API-Hattrick)
 
 ## Configuration
 The only configuration you need to be aware of needs to be specified in the [webpack config files](webpack) for every environment:
