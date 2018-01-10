@@ -35,7 +35,7 @@ npm run build
 This will buncle your webapp and save it to a _dist_ folder.
 
 ## Deploy
-Reference to the [docker deploy on the root project.](https://github.com/daniegarcia254/Loopback-API-Hattrick/tree/release/react-client)
+Reference to the [docker deploy on the root project.](https://github.com/daniegarcia254/Loopback-API-Hattrick/#deploy)
 
 ## Roadmap
 - Adpat the use of React-Router to the Apache server
