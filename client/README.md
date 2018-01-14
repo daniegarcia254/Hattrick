@@ -38,5 +38,6 @@ This will buncle your webapp and save it to a _dist_ folder.
 Reference to the [docker deploy on the root project.](https://github.com/daniegarcia254/Loopback-API-Hattrick/#deploy)
 
 ## Roadmap
-- Adpat the use of React-Router to the Apache server
+- Adapt the use of React-Router to the Apache server
 - Show the user some questions to answer and save the score of his responses to be reflected in the community table.
+- When joining to a community, allow users to filter by category
