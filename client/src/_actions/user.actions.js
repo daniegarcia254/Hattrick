@@ -1,3 +1,4 @@
+import LogRocket from 'logrocket';
 import { userConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from './';
@@ -24,6 +25,7 @@ function login(username, password) {
                                 console.log('Success getting current', currentUser);
                                 var userInfo = Object.assign({}, currentUser, user);
                                 localStorage.setItem('user', JSON.stringify(userInfo));
+																LogRocket.indentify(user.userId.toString(), userInfo);
                                 dispatch(success(userInfo));
                                 history.push(SERVER_ROOT + '/community/choose');
                             },
