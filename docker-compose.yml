@@ -2,6 +2,7 @@ version: '3'
 services:
   hattrick:
     container_name: hattrick
+    restart: always
     links:
       - hattrick_db
     build:
@@ -13,6 +14,7 @@ services:
       - "10002:10002"
     privileged: true
   hattrick_front:
+    restart: always
     container_name: hattrick_front
     build:
       context: .
@@ -24,6 +26,7 @@ services:
     privileged: true
   hattrick_db:
     image: mysql:5.5
+    restart: always
     container_name: hattrick_db
     privileged: true
     env_file:
