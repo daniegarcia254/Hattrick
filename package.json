@@ -9,6 +9,7 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node .",
+    "start-client": "cd client && npm run start-dev",
     "posttest": "npm run lint && nsp check"
   },
   "dependencies": {
