@@ -11,9 +11,9 @@ module.exports = merge(baseConfig, {
 	},
 	plugins: [
 		new webpack.DefinePlugin({
-			"API_URL": '"http://danigarcia-dev.com:10002/api"',
+			"API_URL": '"https://hattrick-server.herokuapp.com/api"',
 			"NODE_ENV": "prod",
-			"SERVER_ROOT": "'/hattrick'"
+			"SERVER_ROOT": "''"
 		})
 	]
 });

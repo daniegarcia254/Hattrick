@@ -12,7 +12,7 @@
   "license": "MIT",
   "scripts": {
     "start-local": "webpack-dev-server --host localhost --port 10009 --config webpack/local.config.js",
-    "start-dev": "webpack-dev-server --host 0.0.0.0 --port 10009 --public danigarcia-dev.com:10009 --config webpack/dev.config.js",
+    "start-dev": "webpack-dev-server --host 0.0.0.0 --public https://hattrick-server.herokuapp.com/ --config webpack/dev.config.js",
     "build": "webpack --config webpack/prod.config.js"
   },
   "dependencies": {
