@@ -44,8 +44,8 @@
     "nsp": "^2.1.0"
   },
   "repository": {
-    "type": "",
-    "url": ""
+    "type": "git",
+    "url": "https://github.com/daniegarcia254/Hattrick"
   },
   "license": "UNLICENSED",
   "description": "Loopback REST APi for thought for it use in a community game with users, community, comments, etc."
