@@ -1,84 +1,43 @@
-# Hattrick
-Hattrick is a **ReactJS + Redux + React-Router** webapp tha be used as base for a community game where users can register, login, join to differents communities, post comments, etc.
+# ReactJS Webapp - _Hattrick_
+The webapp is based on [React + Redux - User Registration and Login Tutorial & Example](https://github.com/cornflourblue/react-redux-registration-login-example), adding to it the use of **_React-Router_**.
 
-The base of the game is that users would answers, everyday, 3 questions related to the community category, winning points and competing against the rest of the community users. An initial version of this webapp can be found in the [client](client/) folder of this repo.
-
-All of this can be made thanks a powerful **REST API developed with Loopback**. The API is prepared to work only with logged users, using authentication tokens. Users can also reset their passwords, join public and privates communities. An email system is implemented as well, and users will receive emails when they register or change their password.
-
-## Deploy
-
-The easiest way to deploy the WebApp and the API is using Docker:
-
-```
-docker-compose build;
-docker-compose up;
-```
-
-It includes three different containers:
-- *hattrick*: where the API will be deployed with PM2
-- *hattrick_db*: where the database will be hosted
-- *hattrick_front*: where the web-app will be deployed
-
-By default:
-- The REST API will be available in: [http://localhost:10002/explorer](http://localhost:10002/explorer)
-- The WebApp will be available in: [http://localhost:10006/hattrick](http://localhost:10006/hattrick)
+Given that as base code, a webapp has been built to allow users to register, login, reset their passwords, create communities, join communities, etc.. all of that making use of the [**Loopback REST API** developed for this.](https://github.com/daniegarcia254/Loopback-API-Hattrick)
 
 ## Configuration
-#### REST API
-Edit the [start.config.json](start.config.json) to set the following env vars:
+The only configuration you need to be aware of needs to be specified in the [webpack config files](webpack) for every environment:
+- _API_URL_: specifies the backend base API URL
+- _NODE_ENV_: specifies the environment
+- _SERVER_ROOT_: specifies the root path where the files will be accesible through the browser
 
-- *DB_HOST*: database host (default: "hattrick_db")
-- *DB_NAME*: database name (default: "hattrick")
-- *DB_PASSWORD*: database  (default: "hattrick")
-- *DB_USER*: database user (default: "hattrick")
-- *APP_PORT*: port where the REST API will be listening (default: 10002)
-- *APP_HOST*: host/domain where the assets (images) will be located (default: "http://www.danigarcia-dev.com")
-- *CRYPTO_ALG*: encryption algorithm used to encrypt user passwords (default: "aes-256-ctr")
-- *CRYPTO_PWD*: encryption password for the encryption algorithm (default: "xxxxxxxxxx")
-- *EMAIL_USER*: email address for nodemailer (default: "apphattrick@gmail.com")
-- *EMAIL_PWD*: email password
-- *EMAIL_SERVICE*: email service used for nodemailer (default: "Gmail")
+## Development
+In the [package.json](package.json) file you would find two different commands for start a development server that provides live reloading using [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
+The development servers are configured to be available at port 10009.
+#### Local server
+This case is only valid if you access the development server in _localhost_ from your browser.
+```
+npm run start-local
+```
+#### Development server
+This case is very useful if you would like the development server to be accessible from the outside.
+```
+npm run start-dev
+```
+**_Note:_** In this case you will need to specify the URL from where the server will be accesible by modifying the _--public_ argument of the corresponding line the [package.json](package.json) file:
+```
+"start-dev": "webpack-dev-server --host 0.0.0.0 --port 10009 --public danigarcia-dev.com:10009 --config webpack/dev.config.js"
+```
 
-**Important**: if you change the port where the REST API will be listening (*APP_PORT*), you must change it as well in the [docker-compose.yml](docker-compose.yml) file.
+## Build
+In the [package.json](package.json) file you would find a command for build the webapp using [webpack](https://github.com/webpack/webpack) bundler.
+```
+npm run build
+```
+This will buncle your webapp and save it to a _dist_ folder.
 
-#### Database
-For the database to be created when the *hattrick_db* container is started, we need to set up the env vars that the MySQL container will need. These var are defined in the [mysql-environment.yml](mysql-environment.yml) file:
-- *MYSQL_ROOT_PASSWORD*: mysql root password
-- *MYSQL_USER*: database name (default: "hattrick")
-- *MYSQL_PASSWORD*: database password (default: "hattrick")
-- *MYSQL_DATABASE*: database user (default: "hattrick")
-
-When the container is started, the *hattrick* database will be created, as well a user with granted privileges. This database, user and password are the same that must be used in the REST API configuration.
-
-## REST API Endpoints
-
-**Note**: for those endpoints that need authentication, you must set the access token (given when login is done) in REST API explorer page in the text input you can find on the top-right corner.
-
-#### Users
-- **[<code>POST</code> users](api-doc/users/POST_user.md)**
-- **[<code>POST</code> users/login](api-doc/users/POST_login.md)**
-- **[<code>POST</code> users/logout](api-doc/users/POST_logout.md)**
-- **[<code>POST</code> users/resetPassword](api-doc/users/POST_resetPassword.md)**
-- **[<code>GET</code> users/{id}](api-doc/users/GET_user.md)**
-- **[<code>PUT</code> users/{id}](api-doc/users/PUT_user.md)**
-
-#### Reset Password Request
-- **[<code>POST</code> resetPasswordRequests](api-doc/reset-password/POST_reset.md)**
-
-#### Categories
-- **[<code>POST</code> categories](api-doc/categories/POST_category.md)**
-- **[<code>PUT</code> categories/{id}](api-doc/categories/PUT_category.md)**
-- **[<code>GET</code> categories/{id}](api-doc/categories/GET_category.md)**
-- **[<code>POST</code> categories/{id}/questions](api-doc/categories/POST_category_question.md)**
-- **[<code>PUT</code> categories/{id}/questions](api-doc/categories/PUT_category_question.md)**
-- **[<code>GET</code> categories/{id}/questions](api-doc/categories/GET_category_question.md)**
-
-#### Communities, Comments, Questions, Answers
-
-Rest of the API endpoints are very similar in its behaviour to the ones explained previously.
-
-So, I'm not going to repeat my self. Why don't you give it a try??!! =)
+## Deploy
+Reference to the [docker deploy on the root project.](https://github.com/daniegarcia254/Loopback-API-Hattrick/#deploy)
 
 ## Roadmap
-
-- Add roles for the users (PLAYER, ADMIN, etc.) and ACLs to the differente endponints depending on those roles. For example questions and categories should be only created by admins.
+- Adapt the use of React-Router to the Apache server
+- Show the user some questions to answer and save the score of his responses to be reflected in the community table.
+- When joining to a community, allow users to filter by category

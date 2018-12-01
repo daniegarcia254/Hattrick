@@ -1,5 +1,0 @@
-# Ignore files for Docker
-*/node_modules
-*/*.log
-*/build
-*/dist
