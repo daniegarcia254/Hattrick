@@ -1,6 +1,10 @@
 {
   "name": "react-redux-registration-login-example",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.6.0",
+    "npm": "5.3.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/cornflourblue/react-redux-registration-login-example.git"

@@ -3,7 +3,6 @@
 var logger = require('../common/logger');
 
 module.exports = {
-  port: process.env.APP_PORT || 10000,
   crypto: {
     algorithm: process.env.CRYPTO_ALG,
     password: process.env.CRYPTO_PWD
